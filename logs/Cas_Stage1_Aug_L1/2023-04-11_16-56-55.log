@@ -1,0 +1,307 @@
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Task: Cas_Stage1_Aug_L1
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Training cascade stage 1
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Using device: cpu
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Using config: config/Cas_Stage1_Aug_L1.yaml
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Data path: None
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Train path: data/training_images_full_train.npz
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Train path 2: data/training_images_subset.npz
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Test path: data/training_images_full_test.npz
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Train augment: True
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Learning rate: 0.3
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Batch size: 16
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Num epochs: 60
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Save model: True
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Loss: L1
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Log path: logs/Cas_Stage1_Aug_L1/2023-04-11_16-56-55.log
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Writer path: runs/Cas_Stage1_Aug_L1/2023-04-11_16-56-55
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Model name: resnet18
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Num outputs: 10
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Pretrained: True
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Load model: False
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Load path: None
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Loading data...
+[Tue Apr 11 16:56:55 2023|main.py|INFO] Load dataset for cascade stage 1
+[Tue Apr 11 16:56:58 2023|main.py|INFO] Initializing network resnet18 with 10 outputs...
+[Tue Apr 11 16:56:59 2023|main.py|INFO] Network: ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=512, out_features=10, bias=True)
+)
+[Tue Apr 11 16:56:59 2023|main.py|INFO] Initializing loss and optimizer...
+[Tue Apr 11 16:56:59 2023|main.py|INFO] Loss: L1
+[Tue Apr 11 16:56:59 2023|main.py|INFO] Optimizer: Adam
+[Tue Apr 11 16:56:59 2023|main.py|INFO] Initializing tensorboard writer at: runs/Cas_Stage1_Aug_L1/2023-04-11_16-56-55
+[Tue Apr 11 16:56:59 2023|main.py|INFO] Training network...
+[Tue Apr 11 17:41:03 2023|main.py|INFO] EPOCH [1/60] Train NME: 4.76089
+[Tue Apr 11 17:41:10 2023|main.py|INFO] EPOCH [1/60] Test NME: 2.39610
+[Tue Apr 11 17:41:10 2023|main.py|INFO] EPOCH [1/60] Learning rate: 0.30000
+[Tue Apr 11 17:41:10 2023|main.py|INFO] EPOCH [1/60] NME improved from 1000.00000 to 2.39610
+[Tue Apr 11 17:41:10 2023|main.py|INFO] EPOCH [1/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_17-41-10_epoch_1_NME_2.39610.pth.tar
+[Tue Apr 11 17:54:06 2023|main.py|INFO] EPOCH [2/60] Train NME: 2.93953
+[Tue Apr 11 17:54:14 2023|main.py|INFO] EPOCH [2/60] Test NME: 3.19282
+[Tue Apr 11 17:54:14 2023|main.py|INFO] EPOCH [2/60] Learning rate: 0.24000
+[Tue Apr 11 18:07:15 2023|main.py|INFO] EPOCH [3/60] Train NME: 2.74133
+[Tue Apr 11 18:07:23 2023|main.py|INFO] EPOCH [3/60] Test NME: 2.72772
+[Tue Apr 11 18:07:23 2023|main.py|INFO] EPOCH [3/60] Learning rate: 0.19200
+[Tue Apr 11 18:20:29 2023|main.py|INFO] EPOCH [4/60] Train NME: 2.58388
+[Tue Apr 11 18:20:36 2023|main.py|INFO] EPOCH [4/60] Test NME: 2.57651
+[Tue Apr 11 18:20:36 2023|main.py|INFO] EPOCH [4/60] Learning rate: 0.15360
+[Tue Apr 11 18:33:45 2023|main.py|INFO] EPOCH [5/60] Train NME: 2.44532
+[Tue Apr 11 18:33:53 2023|main.py|INFO] EPOCH [5/60] Test NME: 2.30969
+[Tue Apr 11 18:33:53 2023|main.py|INFO] EPOCH [5/60] Learning rate: 0.12288
+[Tue Apr 11 18:33:53 2023|main.py|INFO] EPOCH [5/60] NME improved from 2.39610 to 2.30969
+[Tue Apr 11 18:33:53 2023|main.py|INFO] EPOCH [5/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_18-33-53_epoch_5_NME_2.30969.pth.tar
+[Tue Apr 11 18:48:09 2023|main.py|INFO] EPOCH [6/60] Train NME: 2.33561
+[Tue Apr 11 18:48:17 2023|main.py|INFO] EPOCH [6/60] Test NME: 2.31434
+[Tue Apr 11 18:48:17 2023|main.py|INFO] EPOCH [6/60] Learning rate: 0.09830
+[Tue Apr 11 19:03:19 2023|main.py|INFO] EPOCH [7/60] Train NME: 2.28642
+[Tue Apr 11 19:03:28 2023|main.py|INFO] EPOCH [7/60] Test NME: 2.18821
+[Tue Apr 11 19:03:28 2023|main.py|INFO] EPOCH [7/60] Learning rate: 0.07864
+[Tue Apr 11 19:03:28 2023|main.py|INFO] EPOCH [7/60] NME improved from 2.30969 to 2.18821
+[Tue Apr 11 19:03:28 2023|main.py|INFO] EPOCH [7/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_19-03-28_epoch_7_NME_2.18821.pth.tar
+[Tue Apr 11 19:18:24 2023|main.py|INFO] EPOCH [8/60] Train NME: 2.20258
+[Tue Apr 11 19:18:32 2023|main.py|INFO] EPOCH [8/60] Test NME: 2.25373
+[Tue Apr 11 19:18:32 2023|main.py|INFO] EPOCH [8/60] Learning rate: 0.06291
+[Tue Apr 11 19:33:22 2023|main.py|INFO] EPOCH [9/60] Train NME: 2.18166
+[Tue Apr 11 19:33:30 2023|main.py|INFO] EPOCH [9/60] Test NME: 2.19954
+[Tue Apr 11 19:33:30 2023|main.py|INFO] EPOCH [9/60] Learning rate: 0.05033
+[Tue Apr 11 19:48:08 2023|main.py|INFO] EPOCH [10/60] Train NME: 2.15681
+[Tue Apr 11 19:48:16 2023|main.py|INFO] EPOCH [10/60] Test NME: 2.25037
+[Tue Apr 11 19:48:16 2023|main.py|INFO] EPOCH [10/60] Learning rate: 0.04027
+[Tue Apr 11 20:03:16 2023|main.py|INFO] EPOCH [11/60] Train NME: 2.12452
+[Tue Apr 11 20:03:25 2023|main.py|INFO] EPOCH [11/60] Test NME: 2.23202
+[Tue Apr 11 20:03:25 2023|main.py|INFO] EPOCH [11/60] Learning rate: 0.03221
+[Tue Apr 11 20:18:32 2023|main.py|INFO] EPOCH [12/60] Train NME: 2.11252
+[Tue Apr 11 20:18:41 2023|main.py|INFO] EPOCH [12/60] Test NME: 2.17914
+[Tue Apr 11 20:18:41 2023|main.py|INFO] EPOCH [12/60] Learning rate: 0.02577
+[Tue Apr 11 20:18:41 2023|main.py|INFO] EPOCH [12/60] NME improved from 2.18821 to 2.17914
+[Tue Apr 11 20:18:41 2023|main.py|INFO] EPOCH [12/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_20-18-41_epoch_12_NME_2.17914.pth.tar
+[Tue Apr 11 20:33:30 2023|main.py|INFO] EPOCH [13/60] Train NME: 2.09119
+[Tue Apr 11 20:33:39 2023|main.py|INFO] EPOCH [13/60] Test NME: 2.21808
+[Tue Apr 11 20:33:39 2023|main.py|INFO] EPOCH [13/60] Learning rate: 0.02062
+[Tue Apr 11 20:48:34 2023|main.py|INFO] EPOCH [14/60] Train NME: 2.07131
+[Tue Apr 11 20:48:43 2023|main.py|INFO] EPOCH [14/60] Test NME: 2.24241
+[Tue Apr 11 20:48:43 2023|main.py|INFO] EPOCH [14/60] Learning rate: 0.01649
+[Tue Apr 11 21:06:03 2023|main.py|INFO] EPOCH [15/60] Train NME: 2.06369
+[Tue Apr 11 21:06:10 2023|main.py|INFO] EPOCH [15/60] Test NME: 2.16237
+[Tue Apr 11 21:06:10 2023|main.py|INFO] EPOCH [15/60] Learning rate: 0.01319
+[Tue Apr 11 21:06:10 2023|main.py|INFO] EPOCH [15/60] NME improved from 2.17914 to 2.16237
+[Tue Apr 11 21:06:10 2023|main.py|INFO] EPOCH [15/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_21-06-10_epoch_15_NME_2.16237.pth.tar
+[Tue Apr 11 21:19:53 2023|main.py|INFO] EPOCH [16/60] Train NME: 2.04249
+[Tue Apr 11 21:20:01 2023|main.py|INFO] EPOCH [16/60] Test NME: 2.15424
+[Tue Apr 11 21:20:01 2023|main.py|INFO] EPOCH [16/60] Learning rate: 0.01056
+[Tue Apr 11 21:20:01 2023|main.py|INFO] EPOCH [16/60] NME improved from 2.16237 to 2.15424
+[Tue Apr 11 21:20:01 2023|main.py|INFO] EPOCH [16/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_21-20-01_epoch_16_NME_2.15424.pth.tar
+[Tue Apr 11 21:32:59 2023|main.py|INFO] EPOCH [17/60] Train NME: 2.04559
+[Tue Apr 11 21:33:07 2023|main.py|INFO] EPOCH [17/60] Test NME: 2.17209
+[Tue Apr 11 21:33:07 2023|main.py|INFO] EPOCH [17/60] Learning rate: 0.00844
+[Tue Apr 11 21:51:06 2023|main.py|INFO] EPOCH [18/60] Train NME: 2.03112
+[Tue Apr 11 21:51:16 2023|main.py|INFO] EPOCH [18/60] Test NME: 2.15150
+[Tue Apr 11 21:51:16 2023|main.py|INFO] EPOCH [18/60] Learning rate: 0.00676
+[Tue Apr 11 21:51:16 2023|main.py|INFO] EPOCH [18/60] NME improved from 2.15424 to 2.15150
+[Tue Apr 11 21:51:16 2023|main.py|INFO] EPOCH [18/60] Saving model to: checkpoints/Cas_Stage1_Aug_L1/2023-04-11_21-51-16_epoch_18_NME_2.15150.pth.tar
+[Tue Apr 11 22:11:23 2023|main.py|INFO] EPOCH [19/60] Train NME: 2.03554
+[Tue Apr 11 22:11:31 2023|main.py|INFO] EPOCH [19/60] Test NME: 2.18239
+[Tue Apr 11 22:11:31 2023|main.py|INFO] EPOCH [19/60] Learning rate: 0.00540
+[Tue Apr 11 22:29:48 2023|main.py|INFO] EPOCH [20/60] Train NME: 2.02231
+[Tue Apr 11 22:29:59 2023|main.py|INFO] EPOCH [20/60] Test NME: 2.17124
+[Tue Apr 11 22:29:59 2023|main.py|INFO] EPOCH [20/60] Learning rate: 0.00432
+[Tue Apr 11 22:53:17 2023|main.py|INFO] EPOCH [21/60] Train NME: 2.02004
+[Tue Apr 11 22:53:28 2023|main.py|INFO] EPOCH [21/60] Test NME: 2.18234
+[Tue Apr 11 22:53:28 2023|main.py|INFO] EPOCH [21/60] Learning rate: 0.00346
+[Tue Apr 11 23:12:33 2023|main.py|INFO] EPOCH [22/60] Train NME: 2.02647
+[Tue Apr 11 23:12:41 2023|main.py|INFO] EPOCH [22/60] Test NME: 2.18720
+[Tue Apr 11 23:12:41 2023|main.py|INFO] EPOCH [22/60] Learning rate: 0.00277
+[Tue Apr 11 23:25:24 2023|main.py|INFO] EPOCH [23/60] Train NME: 2.02429
+[Tue Apr 11 23:25:32 2023|main.py|INFO] EPOCH [23/60] Test NME: 2.18141
+[Tue Apr 11 23:25:32 2023|main.py|INFO] EPOCH [23/60] Learning rate: 0.00221
+[Tue Apr 11 23:38:27 2023|main.py|INFO] EPOCH [24/60] Train NME: 2.02397
+[Tue Apr 11 23:38:35 2023|main.py|INFO] EPOCH [24/60] Test NME: 2.19624
+[Tue Apr 11 23:38:35 2023|main.py|INFO] EPOCH [24/60] Learning rate: 0.00177
+[Tue Apr 11 23:50:46 2023|main.py|INFO] EPOCH [25/60] Train NME: 2.02187
+[Tue Apr 11 23:50:53 2023|main.py|INFO] EPOCH [25/60] Test NME: 2.20610
+[Tue Apr 11 23:50:53 2023|main.py|INFO] EPOCH [25/60] Learning rate: 0.00142
+[Wed Apr 12 00:04:08 2023|main.py|INFO] EPOCH [26/60] Train NME: 2.01924
+[Wed Apr 12 00:04:16 2023|main.py|INFO] EPOCH [26/60] Test NME: 2.20794
+[Wed Apr 12 00:04:16 2023|main.py|INFO] EPOCH [26/60] Learning rate: 0.00113
+[Wed Apr 12 00:17:42 2023|main.py|INFO] EPOCH [27/60] Train NME: 2.02490
+[Wed Apr 12 00:17:49 2023|main.py|INFO] EPOCH [27/60] Test NME: 2.20126
+[Wed Apr 12 00:17:49 2023|main.py|INFO] EPOCH [27/60] Learning rate: 0.00091
+[Wed Apr 12 00:30:19 2023|main.py|INFO] EPOCH [28/60] Train NME: 2.02380
+[Wed Apr 12 00:30:27 2023|main.py|INFO] EPOCH [28/60] Test NME: 2.19047
+[Wed Apr 12 00:30:27 2023|main.py|INFO] EPOCH [28/60] Learning rate: 0.00073
+[Wed Apr 12 00:43:08 2023|main.py|INFO] EPOCH [29/60] Train NME: 2.03177
+[Wed Apr 12 00:43:16 2023|main.py|INFO] EPOCH [29/60] Test NME: 2.20911
+[Wed Apr 12 00:43:16 2023|main.py|INFO] EPOCH [29/60] Learning rate: 0.00058
+[Wed Apr 12 00:55:56 2023|main.py|INFO] EPOCH [30/60] Train NME: 2.03295
+[Wed Apr 12 00:56:03 2023|main.py|INFO] EPOCH [30/60] Test NME: 2.21065
+[Wed Apr 12 00:56:03 2023|main.py|INFO] EPOCH [30/60] Learning rate: 0.00046
+[Wed Apr 12 01:08:54 2023|main.py|INFO] EPOCH [31/60] Train NME: 2.02484
+[Wed Apr 12 01:09:01 2023|main.py|INFO] EPOCH [31/60] Test NME: 2.21877
+[Wed Apr 12 01:09:01 2023|main.py|INFO] EPOCH [31/60] Learning rate: 0.00037
+[Wed Apr 12 01:21:39 2023|main.py|INFO] EPOCH [32/60] Train NME: 2.04128
+[Wed Apr 12 01:21:46 2023|main.py|INFO] EPOCH [32/60] Test NME: 2.22994
+[Wed Apr 12 01:21:46 2023|main.py|INFO] EPOCH [32/60] Learning rate: 0.00030
+[Wed Apr 12 01:34:35 2023|main.py|INFO] EPOCH [33/60] Train NME: 2.03548
+[Wed Apr 12 01:34:43 2023|main.py|INFO] EPOCH [33/60] Test NME: 2.22005
+[Wed Apr 12 01:34:43 2023|main.py|INFO] EPOCH [33/60] Learning rate: 0.00024
+[Wed Apr 12 01:47:20 2023|main.py|INFO] EPOCH [34/60] Train NME: 2.03744
+[Wed Apr 12 01:47:27 2023|main.py|INFO] EPOCH [34/60] Test NME: 2.21133
+[Wed Apr 12 01:47:27 2023|main.py|INFO] EPOCH [34/60] Learning rate: 0.00019
+[Wed Apr 12 01:59:52 2023|main.py|INFO] EPOCH [35/60] Train NME: 2.04207
+[Wed Apr 12 02:00:00 2023|main.py|INFO] EPOCH [35/60] Test NME: 2.21841
+[Wed Apr 12 02:00:00 2023|main.py|INFO] EPOCH [35/60] Learning rate: 0.00015
+[Wed Apr 12 02:12:16 2023|main.py|INFO] EPOCH [36/60] Train NME: 2.03387
+[Wed Apr 12 02:12:24 2023|main.py|INFO] EPOCH [36/60] Test NME: 2.20150
+[Wed Apr 12 02:12:24 2023|main.py|INFO] EPOCH [36/60] Learning rate: 0.00012
+[Wed Apr 12 02:25:23 2023|main.py|INFO] EPOCH [37/60] Train NME: 2.04126
+[Wed Apr 12 02:25:31 2023|main.py|INFO] EPOCH [37/60] Test NME: 2.20441
+[Wed Apr 12 02:25:31 2023|main.py|INFO] EPOCH [37/60] Learning rate: 0.00010
+[Wed Apr 12 02:38:22 2023|main.py|INFO] EPOCH [38/60] Train NME: 2.04383
+[Wed Apr 12 02:38:30 2023|main.py|INFO] EPOCH [38/60] Test NME: 2.20805
+[Wed Apr 12 02:38:30 2023|main.py|INFO] EPOCH [38/60] Learning rate: 0.00008
+[Wed Apr 12 02:50:57 2023|main.py|INFO] EPOCH [39/60] Train NME: 2.04588
+[Wed Apr 12 02:51:04 2023|main.py|INFO] EPOCH [39/60] Test NME: 2.21507
+[Wed Apr 12 02:51:04 2023|main.py|INFO] EPOCH [39/60] Learning rate: 0.00006
+[Wed Apr 12 03:03:27 2023|main.py|INFO] EPOCH [40/60] Train NME: 2.04789
+[Wed Apr 12 03:03:35 2023|main.py|INFO] EPOCH [40/60] Test NME: 2.20925
+[Wed Apr 12 03:03:35 2023|main.py|INFO] EPOCH [40/60] Learning rate: 0.00005
+[Wed Apr 12 03:16:13 2023|main.py|INFO] EPOCH [41/60] Train NME: 2.04734
+[Wed Apr 12 03:16:20 2023|main.py|INFO] EPOCH [41/60] Test NME: 2.20155
+[Wed Apr 12 03:16:20 2023|main.py|INFO] EPOCH [41/60] Learning rate: 0.00004
+[Wed Apr 12 03:29:01 2023|main.py|INFO] EPOCH [42/60] Train NME: 2.05183
+[Wed Apr 12 03:29:09 2023|main.py|INFO] EPOCH [42/60] Test NME: 2.21208
+[Wed Apr 12 03:29:09 2023|main.py|INFO] EPOCH [42/60] Learning rate: 0.00003
+[Wed Apr 12 03:41:39 2023|main.py|INFO] EPOCH [43/60] Train NME: 2.05008
+[Wed Apr 12 03:41:47 2023|main.py|INFO] EPOCH [43/60] Test NME: 2.21361
+[Wed Apr 12 03:41:47 2023|main.py|INFO] EPOCH [43/60] Learning rate: 0.00003
+[Wed Apr 12 03:54:41 2023|main.py|INFO] EPOCH [44/60] Train NME: 2.05380
+[Wed Apr 12 03:54:48 2023|main.py|INFO] EPOCH [44/60] Test NME: 2.20865
+[Wed Apr 12 03:54:48 2023|main.py|INFO] EPOCH [44/60] Learning rate: 0.00002
+[Wed Apr 12 04:07:05 2023|main.py|INFO] EPOCH [45/60] Train NME: 2.05530
+[Wed Apr 12 04:07:12 2023|main.py|INFO] EPOCH [45/60] Test NME: 2.20661
+[Wed Apr 12 04:07:12 2023|main.py|INFO] EPOCH [45/60] Learning rate: 0.00002
+[Wed Apr 12 04:19:45 2023|main.py|INFO] EPOCH [46/60] Train NME: 2.05759
+[Wed Apr 12 04:19:52 2023|main.py|INFO] EPOCH [46/60] Test NME: 2.20633
+[Wed Apr 12 04:19:52 2023|main.py|INFO] EPOCH [46/60] Learning rate: 0.00001
+[Wed Apr 12 04:32:28 2023|main.py|INFO] EPOCH [47/60] Train NME: 2.04979
+[Wed Apr 12 04:32:35 2023|main.py|INFO] EPOCH [47/60] Test NME: 2.20187
+[Wed Apr 12 04:32:35 2023|main.py|INFO] EPOCH [47/60] Learning rate: 0.00001
+[Wed Apr 12 04:45:06 2023|main.py|INFO] EPOCH [48/60] Train NME: 2.05308
+[Wed Apr 12 04:45:14 2023|main.py|INFO] EPOCH [48/60] Test NME: 2.20514
+[Wed Apr 12 04:45:14 2023|main.py|INFO] EPOCH [48/60] Learning rate: 0.00001
+[Wed Apr 12 04:57:23 2023|main.py|INFO] EPOCH [49/60] Train NME: 2.05851
+[Wed Apr 12 04:57:31 2023|main.py|INFO] EPOCH [49/60] Test NME: 2.20645
+[Wed Apr 12 04:57:31 2023|main.py|INFO] EPOCH [49/60] Learning rate: 0.00001
+[Wed Apr 12 05:10:03 2023|main.py|INFO] EPOCH [50/60] Train NME: 2.06552
+[Wed Apr 12 05:10:11 2023|main.py|INFO] EPOCH [50/60] Test NME: 2.20723
+[Wed Apr 12 05:10:11 2023|main.py|INFO] EPOCH [50/60] Learning rate: 0.00001
+[Wed Apr 12 05:23:09 2023|main.py|INFO] EPOCH [51/60] Train NME: 2.05510
+[Wed Apr 12 05:23:16 2023|main.py|INFO] EPOCH [51/60] Test NME: 2.20630
+[Wed Apr 12 05:23:16 2023|main.py|INFO] EPOCH [51/60] Learning rate: 0.00000
+[Wed Apr 12 05:35:49 2023|main.py|INFO] EPOCH [52/60] Train NME: 2.05792
+[Wed Apr 12 05:35:56 2023|main.py|INFO] EPOCH [52/60] Test NME: 2.22354
+[Wed Apr 12 05:35:56 2023|main.py|INFO] EPOCH [52/60] Learning rate: 0.00000
+[Wed Apr 12 05:48:31 2023|main.py|INFO] EPOCH [53/60] Train NME: 2.06074
+[Wed Apr 12 05:48:38 2023|main.py|INFO] EPOCH [53/60] Test NME: 2.19851
+[Wed Apr 12 05:48:38 2023|main.py|INFO] EPOCH [53/60] Learning rate: 0.00000
+[Wed Apr 12 06:01:00 2023|main.py|INFO] EPOCH [54/60] Train NME: 2.05383
+[Wed Apr 12 06:01:07 2023|main.py|INFO] EPOCH [54/60] Test NME: 2.20317
+[Wed Apr 12 06:01:07 2023|main.py|INFO] EPOCH [54/60] Learning rate: 0.00000
+[Wed Apr 12 06:13:29 2023|main.py|INFO] EPOCH [55/60] Train NME: 2.05763
+[Wed Apr 12 06:13:37 2023|main.py|INFO] EPOCH [55/60] Test NME: 2.21190
+[Wed Apr 12 06:13:37 2023|main.py|INFO] EPOCH [55/60] Learning rate: 0.00000
+[Wed Apr 12 06:26:28 2023|main.py|INFO] EPOCH [56/60] Train NME: 2.05808
+[Wed Apr 12 06:26:35 2023|main.py|INFO] EPOCH [56/60] Test NME: 2.19601
+[Wed Apr 12 06:26:35 2023|main.py|INFO] EPOCH [56/60] Learning rate: 0.00000
+[Wed Apr 12 06:39:22 2023|main.py|INFO] EPOCH [57/60] Train NME: 2.06295
+[Wed Apr 12 06:39:30 2023|main.py|INFO] EPOCH [57/60] Test NME: 2.21118
+[Wed Apr 12 06:39:30 2023|main.py|INFO] EPOCH [57/60] Learning rate: 0.00000
+[Wed Apr 12 06:52:00 2023|main.py|INFO] EPOCH [58/60] Train NME: 2.06283
+[Wed Apr 12 06:52:07 2023|main.py|INFO] EPOCH [58/60] Test NME: 2.21019
+[Wed Apr 12 06:52:07 2023|main.py|INFO] EPOCH [58/60] Learning rate: 0.00000
+[Wed Apr 12 07:04:37 2023|main.py|INFO] EPOCH [59/60] Train NME: 2.06649
+[Wed Apr 12 07:04:44 2023|main.py|INFO] EPOCH [59/60] Test NME: 2.20315
+[Wed Apr 12 07:04:44 2023|main.py|INFO] EPOCH [59/60] Learning rate: 0.00000
+[Wed Apr 12 07:17:34 2023|main.py|INFO] EPOCH [60/60] Train NME: 2.06578
+[Wed Apr 12 07:17:42 2023|main.py|INFO] EPOCH [60/60] Test NME: 2.19159
+[Wed Apr 12 07:17:42 2023|main.py|INFO] EPOCH [60/60] Learning rate: 0.00000
