@@ -7,9 +7,7 @@ checkpoints:
 dir structure: 
 
 ├─checkpoints
-
 │  ├─Cas_Stage1_Aug_L1
-
 │  ├─Cas_Stage1_Aug_MSE
 │  ├─Cas_Stage1_Aug_SmoothL1
 │  ├─Cas_Stage1_Aug_Wing
