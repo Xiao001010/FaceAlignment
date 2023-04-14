@@ -147,15 +147,15 @@ log.info("Initializing loss and optimizer...")
 log.info("Loss: {}".format(LOSS))
 # Choose loss function
 if LOSS == "MSE" or LOSS == "L2":
-    criterion = nn.MSELoss()
+    criterion = nn.MSELoss().to(DEVICE)
 elif LOSS == "L1":
-    criterion = nn.L1Loss()
+    criterion = nn.L1Loss().to(DEVICE)
 elif LOSS == "SmoothL1":
-    criterion = nn.SmoothL1Loss()
+    criterion = nn.SmoothL1Loss().to(DEVICE)
 elif LOSS == "Wing":
-    criterion = WingLoss()
+    criterion = WingLoss().to(DEVICE)
 elif LOSS == "SoftWing":
-    criterion = SoftWingLoss()
+    criterion = SoftWingLoss().to(DEVICE)
 else:
     log.error("Loss function not supported")
     exit()
