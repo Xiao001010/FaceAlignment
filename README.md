@@ -1,8 +1,8 @@
 # Face Alignment
 
-data: 
+data: https://drive.google.com/drive/folders/1mxaJRkDj8JWco4pbr7Z-oAfA_kVt93X6?usp=sharing
 
-checkpoints: 
+checkpoints: https://drive.google.com/drive/folders/1g3j0dPf-0_CPcHRTObO89OJv8g448Abw?usp=sharing
 
 dir structure: 
 
