@@ -220,6 +220,3 @@ for epoch in range(NUM_EPOCHS):
 
 
 # Path: tensorboard --logdir=runs
-# Path: tensorboard --logdir=runs --port=6006
-# Path: tensorboard --logdir=runs --port=6006 --bind_all
-# Path: tensorboard --logdir=runs --port=6006 --bind_all --host=
