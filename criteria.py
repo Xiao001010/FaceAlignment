@@ -181,3 +181,12 @@ class AdaptiveWingLoss(nn.Module):
             A * diff - C)
         return torch.mean(losses)
     
+
+if __name__ == "__main__":
+    criteria = WingLoss()
+    B = [8, 16, 32]
+    for b in B:
+        pred = torch.ones((b, 10))
+        target = torch.zeros((b, 10))
+        loss = criteria(pred, target)
+        print(b, loss)
