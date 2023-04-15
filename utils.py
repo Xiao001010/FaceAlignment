@@ -116,7 +116,7 @@ def NME(y_true, y_pred, device=torch.device("cpu")):
     nme = torch.mean(torch.linalg.norm(y_true - y_pred, dim=-1) , dim=1) / interocular_distance
     # nme = torch.mean(torch.linalg.norm(y_true - y_pred, dim=-1) , dim=1)
     # print(nme.shape)
-    return nme
+    return torch.mean(nme)
 
 
 def train(loop, model, optimizer, criterion, writer, step, device):
@@ -163,7 +163,7 @@ def train(loop, model, optimizer, criterion, writer, step, device):
         # gradient descent or adam step
         optimizer.step()
         nme = NME(targets, predictions, device)
-        nme_total += torch.sum(nme)
+        nme_total += nme
 
         # update progress bar
         loop.set_postfix({"Loss": f"{loss.item():.4f}", "NME": f"{nme_total.item()/(batch_idx+1):.4f}"})
@@ -210,7 +210,7 @@ def test(loop, model, criterion, writer, step, device):
             predictions = model(data)
             loss = criterion(predictions, targets)
             nme = NME(targets, predictions, device)
-            nme_total += torch.sum(nme)
+            nme_total += nme
             # print(nme_total)
 
             # update progress bar
@@ -254,22 +254,32 @@ def Recover(image, landmarks, angle, size=(256, 256)):
     return new_img.astype(np.uint8), new_landmarks.astype(np.float32)
 
 
-if __name__ == "__main__":
-    from resnet import resnet18
-    from datasets import FaceDataset
-    from torch.utils.data import DataLoader
-    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-    NUM_OUTPUTS = 44*2  # 44 points, 2 coordinates
-    TEST_PATH = "data/training_images_full_test.npz"
-    model = resnet18(pretrained=True, num_classes=NUM_OUTPUTS).to(DEVICE)
-    test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False)
-    criterion = torch.nn.MSELoss()
-    test_loader = DataLoader(dataset=test_dataset, batch_size=4, shuffle=True)
-    test_loop = tqdm(test_loader, total=len(test_loader), leave=False)
-    test_loop.set_description("Testing")
+# if __name__ == "__main__":
+#     from resnet import resnet18
+#     from datasets import FaceDataset
+#     from torch.utils.data import DataLoader
+#     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+#     NUM_OUTPUTS = 44*2  # 44 points, 2 coordinates
+#     TEST_PATH = "data/training_images_full_test.npz"
+#     model = resnet18(pretrained=True, num_classes=NUM_OUTPUTS).to(DEVICE)
+#     test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False)
+#     criterion = torch.nn.MSELoss()
+#     test_loader = DataLoader(dataset=test_dataset, batch_size=4, shuffle=True)
+#     test_loop = tqdm(test_loader, total=len(test_loader), leave=False)
+#     test_loop.set_description("Testing")
     
-    timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
-    writer = SummaryWriter(f"runs/{timestamp}/")
-    step = 0
-    step, nme = test(test_loop, model, criterion, writer, step, DEVICE)
-    print(nme)
+#     timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+#     writer = SummaryWriter(f"runs/{timestamp}/")
+#     step = 0
+#     step, nme = test(test_loop, model, criterion, writer, step, DEVICE)
+#     print(nme)
+
+
+
+# if __name__ == "__main__":
+#     B = [8, 16, 32]
+#     for b in B:
+#         pred = torch.ones((b, 10))*0.5
+#         target = torch.ones((b, 10))*0.6
+#         nme = NME(pred, target)
+#         print(b, nme)
