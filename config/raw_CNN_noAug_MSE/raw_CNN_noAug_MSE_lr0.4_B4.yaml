@@ -1,4 +1,4 @@
-TASK: "raw_CNN_noAug_Wing"
+TASK: "raw_CNN_noAug_MSE_lr0.4_B4-2"
 
 CASCADE: 
   STAGE: None
@@ -13,11 +13,11 @@ DATA:
   TRAIN_AUGMENT: False
 
 TRAIN: 
-  LEARNING_RATE: 0.5
-  BATCH_SIZE: 16
+  LEARNING_RATE: 0.4
+  BATCH_SIZE: 4
   NUM_EPOCHS: 100
   SAVE_MODEL: True
-  LOSS: "Wing"
+  LOSS: "MSE"
 
 MODEL: 
   MODEL_NAME: "resnet18"

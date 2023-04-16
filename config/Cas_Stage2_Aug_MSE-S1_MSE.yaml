@@ -1,9 +1,9 @@
-TASK: "Cas_Stage2_Aug_Wing-S1_Wing"
+TASK: "Cas_Stage2_Aug_MSE-S1_MSE"
 
 CASCADE: 
   STAGE: 2
   STAGE1_MODEL_NAME: "resnet18"
-  STAGE1_MODEL_PATH: "checkpoints/Cas_Stage1_Aug_Wing/2023-04-11_02-43-53_epoch_9_NME_2.21141.pth.tar"
+  STAGE1_MODEL_PATH: "checkpoints/Cas_Stage1_Aug_MSE/2023-04-10_16-12-06_epoch_22_NME_1.53919.pth.tar"
 
 DATA:
   TRAIN_PATH: "data/training_images_full_train.npz"
@@ -16,7 +16,7 @@ TRAIN:
   BATCH_SIZE: 32
   NUM_EPOCHS: 120
   SAVE_MODEL: True
-  LOSS: "Wing"
+  LOSS: "MSE"
 
 MODEL: 
   MODEL_NAME: "resnet50"
