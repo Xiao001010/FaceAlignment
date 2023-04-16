@@ -61,3 +61,33 @@ dir structure:
     └─raw_CNN_noAug_MSE
 
         └─2023-04-06_20-33-14
+
+# Models
+
+|        **Model** | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 |
+| ---------------: | :----------: | :----------: | :----------: | :----------: | :----------: |
+| **Augmentation** |    False     |    False     |    False     |    False     |    False     |
+|         **Loss** |     MSE      |     MSE      |     MSE      |     MSE      |     MSE      |
+| **Learing Rate** |     0.3      |     0.3      |     0.3      |     0.3      |     0.3      |
+|   **Batch Size** |      2       |      4       |      8       |      16      |      32      |
+|                  |              |              |              |              |              |
+|          **NME** |    5.874     |    5.580     |    8.542     |    10.694    |    12.052    |
+
+
+|        **Model** | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 |
+| ---------------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |
+| **Augmentation** |    False     |    False     |    False     |    False     |    False     |    False     |
+|         **Loss** |     MSE      |     MSE      |     MSE      |     MSE      |     MSE      |     MSE      |
+| **Learing Rate** |     0.1      |     0.2      |     0.3      |     0.4      |     0.5      |     0.6      |
+|   **Batch Size** |      4       |      4       |      4       |      4       |      4       |      4       |
+|                  |              |              |              |              |              |              |
+|          **NME** |    6.695     |    6.513     |    5.580     |    6.004     |    5.5856    |    6.190     |
+
+|        **Model** | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 | raw Resnet18 |
+| ---------------: | :----------: | :----------: | :----------: | :----------: | :----------: |
+| **Augmentation** |    False     |    False     |    False     |    False     |    False     |
+|         **Loss** |     Wing     |     Wing     |     Wing     |     Wing     |     Wing     |
+| **Learing Rate** |     0.3      |     0.3      |     0.3      |     0.3      |     0.3      |
+|   **Batch Size** |      2       |      4       |      8       |      16      |      32      |
+|                  |              |              |              |              |              |
+|          **NME** |    12.178    |    6.369     |              |              |              |
