@@ -109,13 +109,17 @@ def NME(y_true, y_pred, device=torch.device("cpu")):
     if y_true.shape[1] == 44:
         interocular_distance = torch.linalg.norm(y_true[:, 20, :] - y_true[:, 29, :], dim=1)
     elif y_true.shape[1] == 5:
-        interocular_distance = torch.linalg.norm(y_true[:, 0, :] - y_true[:, 1, :], dim=1)
+        interocular_distance = torch.linalg.norm(y_true[:, 0, :] - y_true[:, 1, :], dim=-1)
     else:
         raise ValueError("Number of landmarks is not 44 or 5")
-    # print(interocular_distance.shape, y_true[:, 1, :].shape)
-    nme = torch.mean(torch.linalg.norm(y_true - y_pred, dim=-1) , dim=1) / interocular_distance
-    # nme = torch.mean(torch.linalg.norm(y_true - y_pred, dim=-1) , dim=1)
+    # print(interocular_distance.shape, y_true[:, 1, :].shape, interocular_distance)
+    # nme = torch.linalg.norm(y_true - y_pred, dim=-1)
+    # print(nme.mean().shape, interocular_distance)
+    # nme = torch.sum(nme, dim=1) / (interocular_distance*y_pred.shape[1])
     # print(nme.shape)
+    nme = torch.mean(torch.linalg.norm(y_true - y_pred, dim=-1) ) / interocular_distance
+    # nme = torch.mean(torch.linalg.norm(y_true - y_pred, dim=-1) , dim=1)
+    # print(nme)
     return torch.mean(nme)
 
 
@@ -254,32 +258,42 @@ def Recover(image, landmarks, angle, size=(256, 256)):
     return new_img.astype(np.uint8), new_landmarks.astype(np.float32)
 
 
-# if __name__ == "__main__":
-#     from resnet import resnet18
-#     from datasets import FaceDataset
-#     from torch.utils.data import DataLoader
-#     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-#     NUM_OUTPUTS = 44*2  # 44 points, 2 coordinates
-#     TEST_PATH = "data/training_images_full_test.npz"
-#     model = resnet18(pretrained=True, num_classes=NUM_OUTPUTS).to(DEVICE)
-#     test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False)
-#     criterion = torch.nn.MSELoss()
-#     test_loader = DataLoader(dataset=test_dataset, batch_size=4, shuffle=True)
-#     test_loop = tqdm(test_loader, total=len(test_loader), leave=False)
-#     test_loop.set_description("Testing")
-    
-#     timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
-#     writer = SummaryWriter(f"runs/{timestamp}/")
-#     step = 0
-#     step, nme = test(test_loop, model, criterion, writer, step, DEVICE)
-#     print(nme)
+if __name__ == "__main__":
+    from resnet import resnet18
+    from datasets import FaceDataset
+    from torch.utils.data import DataLoader
+    # DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    DEVICE = "cpu"
+    NUM_OUTPUTS = 44*2  # 44 points, 2 coordinates
+    TEST_PATH = "data/training_images_full_test.npz"
+    model = resnet18(pretrained=True, num_classes=NUM_OUTPUTS).to(DEVICE)
+    test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False)
+    criterion = torch.nn.MSELoss()
+    for b in [2, 4, 8, 16, 32, 64]:
+        test_loader = DataLoader(dataset=test_dataset, batch_size=b, shuffle=True)
+        test_loop = tqdm(test_loader, total=len(test_loader), leave=False)
+        test_loop.set_description("Testing")
+        timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+        writer = SummaryWriter(f"runs/{timestamp}/")
+        step = 0
+        step, nme = test(test_loop, model, criterion, writer, step, DEVICE)
+        print(b, nme)
+    # test_loader = DataLoader(dataset=test_dataset, batch_size=4, shuffle=True)
+    # test_loop = tqdm(test_loader, total=len(test_loader), leave=False)
+    # test_loop.set_description("Testing")
+    # # print(len(test_loop))
+    # timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+    # writer = SummaryWriter(f"runs/{timestamp}/")
+    # step = 0
+    # step, nme = test(test_loop, model, criterion, writer, step, DEVICE)
+    # print(nme)
 
 
 
 # if __name__ == "__main__":
 #     B = [8, 16, 32]
 #     for b in B:
-#         pred = torch.ones((b, 10))*0.5
-#         target = torch.ones((b, 10))*0.6
+#         pred = torch.randn((b, 10))
+#         target = torch.randn((b, 10))
 #         nme = NME(pred, target)
 #         print(b, nme)
