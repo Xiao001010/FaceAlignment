@@ -18,3 +18,119 @@
 [Wed Apr 19 22:00:27 2023|main.py|INFO] Load path: None
 [Wed Apr 19 22:00:27 2023|main.py|INFO] Loading data...
 [Wed Apr 19 22:00:27 2023|main.py|INFO] Load dataset for raw_CNN_Aug_MSE_lr0.3_B8
+[Wed Apr 19 22:00:31 2023|main.py|INFO] Initializing network resnet18 with 88 outputs...
+[Wed Apr 19 22:00:32 2023|main.py|INFO] Network: ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=512, out_features=88, bias=True)
+)
+[Wed Apr 19 22:00:32 2023|main.py|INFO] Initializing loss and optimizer...
+[Wed Apr 19 22:00:32 2023|main.py|INFO] Loss: MSE
+[Wed Apr 19 22:00:32 2023|main.py|INFO] Optimizer: Adam
+[Wed Apr 19 22:00:32 2023|main.py|INFO] Initializing tensorboard writer at: runs/raw_CNN_Aug_MSE_lr0.3_B8/2023-04-19_22-00-27
+[Wed Apr 19 22:00:32 2023|main.py|INFO] Training network...
+[Wed Apr 19 22:12:32 2023|main.py|INFO] EPOCH [1/100] Train NME: 0.32020
+[Wed Apr 19 22:12:33 2023|main.py|INFO] EPOCH [1/100] Test NME: 0.21113
+[Wed Apr 19 22:12:33 2023|main.py|INFO] EPOCH [1/100] Learning rate: 0.30000
+[Wed Apr 19 22:12:33 2023|main.py|INFO] EPOCH [1/100] NME improved from 1000.00000 to 0.21113
+[Wed Apr 19 22:12:33 2023|main.py|INFO] EPOCH [1/100] Saving model to: checkpoints/raw_CNN_Aug_MSE_lr0.3_B8/2023-04-19_22-12-33_epoch_1_NME_0.21113.pth.tar
+[Wed Apr 19 22:24:06 2023|main.py|INFO] EPOCH [2/100] Train NME: 0.20368
+[Wed Apr 19 22:24:08 2023|main.py|INFO] EPOCH [2/100] Test NME: 0.15177
+[Wed Apr 19 22:24:08 2023|main.py|INFO] EPOCH [2/100] Learning rate: 0.24000
+[Wed Apr 19 22:24:08 2023|main.py|INFO] EPOCH [2/100] NME improved from 0.21113 to 0.15177
+[Wed Apr 19 22:24:08 2023|main.py|INFO] EPOCH [2/100] Saving model to: checkpoints/raw_CNN_Aug_MSE_lr0.3_B8/2023-04-19_22-24-08_epoch_2_NME_0.15177.pth.tar
+[Wed Apr 19 22:33:16 2023|main.py|INFO] EPOCH [3/100] Train NME: 0.19203
+[Wed Apr 19 22:33:17 2023|main.py|INFO] EPOCH [3/100] Test NME: 0.20204
+[Wed Apr 19 22:33:17 2023|main.py|INFO] EPOCH [3/100] Learning rate: 0.19200
+[Wed Apr 19 22:38:57 2023|main.py|INFO] EPOCH [4/100] Train NME: 0.16887
+[Wed Apr 19 22:38:58 2023|main.py|INFO] EPOCH [4/100] Test NME: 0.16096
+[Wed Apr 19 22:38:58 2023|main.py|INFO] EPOCH [4/100] Learning rate: 0.15360
+[Wed Apr 19 22:45:01 2023|main.py|INFO] EPOCH [5/100] Train NME: 0.16341
+[Wed Apr 19 22:45:02 2023|main.py|INFO] EPOCH [5/100] Test NME: 0.15048
+[Wed Apr 19 22:45:02 2023|main.py|INFO] EPOCH [5/100] Learning rate: 0.12288
+[Wed Apr 19 22:45:02 2023|main.py|INFO] EPOCH [5/100] NME improved from 0.15177 to 0.15048
+[Wed Apr 19 22:45:02 2023|main.py|INFO] EPOCH [5/100] Saving model to: checkpoints/raw_CNN_Aug_MSE_lr0.3_B8/2023-04-19_22-45-02_epoch_5_NME_0.15048.pth.tar
+[Wed Apr 19 22:52:10 2023|main.py|INFO] EPOCH [6/100] Train NME: 0.15718
+[Wed Apr 19 22:52:11 2023|main.py|INFO] EPOCH [6/100] Test NME: 0.14482
+[Wed Apr 19 22:52:11 2023|main.py|INFO] EPOCH [6/100] Learning rate: 0.09830
+[Wed Apr 19 22:52:11 2023|main.py|INFO] EPOCH [6/100] NME improved from 0.15048 to 0.14482
+[Wed Apr 19 22:52:11 2023|main.py|INFO] EPOCH [6/100] Saving model to: checkpoints/raw_CNN_Aug_MSE_lr0.3_B8/2023-04-19_22-52-11_epoch_6_NME_0.14482.pth.tar
