@@ -1,0 +1,22 @@
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Task: Cas_Stage1_noAug_MSE_lr0.5_B4
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Training cascade stage 1
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Using device: cuda
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Using config: config\Cas_Stage1_noAug_MSE\Cas_Stage1_noAug_MSE_lr0.5_B4.yaml
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Train path: data/training_images_full_train.npz
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Train path 2: data/training_images_subset.npz
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Test path: data/training_images_full_test.npz
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Train augment: False
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Learning rate: 0.5
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Batch size: 4
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Num epochs: 100
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Save model: True
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Loss: MSE
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Log path: logs/Cas_Stage1_noAug_MSE_lr0.5_B4/2023-04-19_22-49-36.log
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Writer path: runs/Cas_Stage1_noAug_MSE_lr0.5_B4/2023-04-19_22-49-36
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Model name: resnet18
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Num outputs: 10
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Pretrained: True
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Load model: False
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Load path: None
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Loading data...
+[Wed Apr 19 22:49:36 2023|main.py|INFO] Load dataset for cascade stage 1
