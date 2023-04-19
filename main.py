@@ -18,7 +18,7 @@ from criteria import *
 from resnet import *
 
 parser = argparse.ArgumentParser(description='Train a model')
-parser.add_argument('--config', type=str, default='config/Cas_Stage2_Aug_Wing-S1_MSE.yaml', help='Path to config file')
+parser.add_argument('--config', type=str, default='config/raw_CNN_noAug_MSE_lr0.3_B16.yaml', help='Path to config file')
 args = parser.parse_args()
 
 config = yaml.load(open(args.config, 'r'), Loader=yaml.FullLoader)
