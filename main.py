@@ -219,4 +219,8 @@ for epoch in range(NUM_EPOCHS):
         pre_test_nme = test_nme
 
 
-# Path: tensorboard --logdir=runs
+# run code:
+# python main.py --config config\raw_CNN_noAug_MSE\raw_CNN_noAug_MSE_lr0.6_B4.yaml
+
+# for activate tensorboard:
+# tensorboard --logdir=runs
