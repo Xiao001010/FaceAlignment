@@ -1,0 +1,27 @@
+TASK: "Cas_Stage1_Aug_MSE_lr0.5_B8"
+
+CASCADE: 
+  STAGE: 1
+  STAGE1_MODEL_NAME: "resnet18"
+  STAGE1_MODEL_PATH: None
+
+DATA:
+  DATA_PATH: None
+  TRAIN_PATH: "data/training_images_full_train.npz"
+  TRAIN_PATH2: "data/training_images_subset.npz"
+  TEST_PATH: "data/training_images_full_test.npz"
+  TRAIN_AUGMENT: True
+
+TRAIN: 
+  LEARNING_RATE: 0.5
+  BATCH_SIZE: 8
+  NUM_EPOCHS: 100
+  SAVE_MODEL: True
+  LOSS: "MSE"
+
+MODEL: 
+  MODEL_NAME: "resnet18"
+  NUM_OUTPUTS: 10
+  PRETRAINED: True
+  LOAD_MODEL: False
+  LOAD_PATH: None
