@@ -27,8 +27,6 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DEVICE = "cpu"
 print("Using device:", DEVICE)
 
-INFERENCE = config['INFERENCE']
-
 TASK = config['TASK']
 STAGE = config['CASCADE']['STAGE']
 STAGE1_MODEL_NAME = config['CASCADE']['STAGE1_MODEL_NAME']
@@ -36,6 +34,8 @@ STAGE1_MODEL_PATH = config['CASCADE']['STAGE1_MODEL_PATH']
 # Data
 TEST_PATH = config['DATA']['TEST_PATH']
 AUGMENT = config['DATA']['AUGMENT']
+INFERENCE = config['DATA']['INFERENCE']
+
 # Model hyperparameters
 MODEL_NAME = config['MODEL']['MODEL_NAME']
 NUM_OUTPUTS = config['MODEL']['NUM_OUTPUTS']
