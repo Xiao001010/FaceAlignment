@@ -6,6 +6,8 @@ from torch.utils.data import Dataset
 # from torchvision import transforms
 import torchlm
 
+from utils import Recover
+
 
 def split_data(path, split=0.8):
     """This function splits the data into train and test data. The split ratio is 80:20 by default.
@@ -202,7 +204,6 @@ def Align(image, landmarks, eyes):
 
     # perform the actual rotation and return the image
     new_img = cv2.warpAffine(image.copy(), M, (w, h))
-
     new_landmarks = np.hstack((landmarks, np.ones((landmarks.shape[0], 1), dtype=type(landmarks[0][0]))))
     new_landmarks = np.dot(M, new_landmarks.T).T
 
@@ -223,10 +224,11 @@ class FaceDataset(Dataset):
     augment : bool, optional
         if True, the dataset will be augmented, by default False
     """    
-    def __init__(self, path, partial=False, augment=False):
+    def __init__(self, path, partial=False, augment=False, inference=False):
 
         self.partial = partial
         self.augment = augment
+        self.inference = inference
         if self.augment:
             self.trans = torchlm.LandmarksCompose([
                                         torchlm.bind(Light, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5),
@@ -264,91 +266,8 @@ class FaceDataset(Dataset):
         # Extract the images
         self.images = data['images']
         # and the data points
-        self.pts = data['points']
-
-    def __getitem__(self, index):
-        """This function is used to get the image and the landmarks of the image.
-
-        Notes
-        ------
-        number of landmarks : K = 44 if partial is False else 5
-        label shape : 44*2 if partial is False else 5*2
-
-        Parameters
-        ----------
-        index : int
-            index of the image
-
-        Returns
-        -------
-        img : torch.Tensor[3, 224, 224]
-            image
-        label : torch.Tensor[88 if partial is False else 10]
-            landmarks of the image
-        """        
-        img = self.images[index]
-        label = self.pts[index]
-        if self.partial and label.shape[-2] == 44:
-            indices = (20, 29, 16, 32, 38)
-            label = label[indices, :]
-        # img = Image.fromarray(img.astype('uint8'), mode='RGB')
-        if self.augment:
-            img, label = self.trans(img, label)
-        else:
-            img, label = self.trans(img, label)
-        return img, label.reshape(-1)
-
-    def __len__(self):
-        return len(self.images)
-    
-
-class CascadeStage2Dataset(Dataset):
-    """This class is used to load the dataset.
-
-    Parameters
-    ----------
-    path : str
-        path to the dataset
-    partial : bool, optional
-        if True, the dataset will be loaded in partial mode, 
-        only 5 landmarks will be loaded, by default False
-    augment : bool, optional
-        if True, the dataset will be augmented, by default False
-    """    
-    def __init__(self, path, model, augment=False, device=torch.device('cpu'), required_angle=False):
-        self.model = model
-        self.augment = augment
-        self.device = device
-        self.required_angle = required_angle
-        if self.augment:
-            self.trans = torchlm.LandmarksCompose([
-                                        torchlm.bind(Light, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5),
-                                        torchlm.bind(Shadow, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5), 
-                                        torchlm.bind(Mask, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5),
-
-                                        torchlm.LandmarksRandomBlur(kernel_range=(3, 5), prob=0.5),
-                                        torchlm.LandmarksResize((224, 224)), 
-                                        torchlm.LandmarksNormalize(),
-                                        torchlm.LandmarksToTensor(),
-                                        ])
-
-        else:
-            self.trans = torchlm.LandmarksCompose([
-                                        # I don't know why the landmarks will be changed if I resize the image
-                                        # torchlm.LandmarksResize((224, 224)), 
-                                        torchlm.LandmarksNormalize(),
-                                        torchlm.LandmarksToTensor(),
-                                        ])
-            # self.trans = transforms.Compose([transforms.Resize((224, 224)),
-            #                                  transforms.ToTensor(),
-            #                                  transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
-
-        # Load the data using np.load
-        data = np.load(path, allow_pickle=True)
-        # Extract the images
-        self.images = data['images']
-        # and the data points
-        self.pts = data['points']
+        if not self.inference:
+            self.pts = data['points']
 
     def __getitem__(self, index):
         """This function is used to get the image and the landmarks of the image.
@@ -370,20 +289,129 @@ class CascadeStage2Dataset(Dataset):
         label : torch.Tensor[88 if partial is False else 10]
             landmarks of the image
         """      
-        with torch.no_grad():  
-            pred = self.model(torch.tensor(self.images[index]).unsqueeze(0).permute(0, 3, 1, 2).float().to(self.device))
-            eyes = pred.detach().cpu().numpy().reshape(-1, 2)[[0, 1]]
-        img = self.images[index]
-        label = self.pts[index]
-        img, label, angle = Align(img, label, eyes)
+        img = self.images[index]  
+        if self.inference:
+            if self.partial:
+                label = np.zeros((5, 2))
+            else:
+                label = np.zeros((44, 2))
+        else: 
+            label = self.pts[index]
+            if self.partial and label.shape[-2] == 44:
+                indices = (20, 29, 16, 32, 38)
+                label = label[indices, :]
+        img, label = self.trans(img, label)
+        return img, label.reshape(-1)
+
+    def __len__(self):
+        return len(self.images)
+    
+
+class CascadeStage2Dataset(Dataset):
+    """This class is used to load the dataset.
+
+    Parameters
+    ----------
+    path : str
+        path to the dataset
+    partial : bool, optional
+        if True, the dataset will be loaded in partial mode, 
+        only 5 landmarks will be loaded, by default False
+    augment : bool, optional
+        if True, the dataset will be augmented, by default False
+    """    
+    def __init__(self, path, model, augment=False, device=torch.device('cpu'), required_angle=False, inference=False, test=False):
+        self.model = model
+        self.augment = augment
+        self.device = device
+        self.required_angle = required_angle
+        self.inference = inference
+        self.test = test
         if self.augment:
-            img, label = self.trans(img, label)
+            self.trans = torchlm.LandmarksCompose([
+                                        torchlm.bind(Light, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5),
+                                        torchlm.bind(Shadow, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5), 
+                                        torchlm.bind(Mask, bind_type=torchlm.BindEnum.Callable_Array, prob=0.5),
+
+                                        torchlm.LandmarksRandomBlur(kernel_range=(3, 5), prob=0.5),
+                                        torchlm.LandmarksResize((224, 224)), 
+                                        torchlm.LandmarksNormalize(),
+                                        torchlm.LandmarksToTensor(),
+                                        ])
+
         else:
-            img, label = self.trans(img, label)
-        if self.required_angle:
+            self.trans = torchlm.LandmarksCompose([
+                                        # I don't know whether the landmarks will be changed if I resize the image
+                                        torchlm.LandmarksResize((224, 224)), 
+                                        torchlm.LandmarksNormalize(),
+                                        torchlm.LandmarksToTensor(),
+                                        ])
+            # self.trans = transforms.Compose([transforms.Resize((224, 224)),
+            #                                  transforms.ToTensor(),
+            #                                  transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+
+        
+        self.trans_S1 = torchlm.LandmarksCompose([
+                                        torchlm.LandmarksResize((224, 224)),
+                                        torchlm.LandmarksNormalize(),
+                                        torchlm.LandmarksToTensor(),
+                                        ])
+        # Load the data using np.load
+        data = np.load(path, allow_pickle=True)
+        # Extract the images
+        self.images = data['images']
+        # and the data points
+        if not self.inference:
+            self.pts = data['points']
+
+    def __getitem__(self, index):
+        """This function is used to get the image and the landmarks of the image.
+
+        Notes
+        ------
+        number of landmarks : K = 44 if partial is False else 5
+        label shape : 44*2 if partial is False else 5*2
+
+        Parameters
+        ----------
+        index : int
+            index of the image
+
+        Returns
+        -------
+        img : torch.Tensor[3, 224, 224]
+            image
+        label : torch.Tensor[88 if partial is False else 10]
+            landmarks of the image
+        """      
+        img = self.images[index]
+        with torch.no_grad():  
+            img_ = img.copy()
+            label_ = np.zeros((5, 2))
+            img_, _ = self.trans_S1(img_, label_)
+            # print("img_", img_.shape)
+            pred = self.model(img_.unsqueeze(0).to(self.device)).detach().cpu()
+            _, pred  = Recover(img_, pred)
+            # print("pred", pred.shape)
+            eyes = pred[[0, 1]]
+
+        if self.inference:
+            label = np.zeros((44, 2))
+        else:
+            label = self.pts[index]
+            # # print("compare img", img.shape, img_.shape)
+            # print(eyes.shape, label.shape, pred.shape)
+            # print(eyes, label[20], label[29])
+        img, label, angle = Align(img, label, eyes)
+        img, label = self.trans(img, label)
+
+        if self.test:
+            return img, label.reshape(-1), angle, pred
+        elif self.required_angle:
             return img, label.reshape(-1), angle
         else:
             return img, label.reshape(-1)
+        
 
     def __len__(self):
         return len(self.images)
@@ -391,27 +419,65 @@ class CascadeStage2Dataset(Dataset):
 if __name__ == "__main__":
     # split_data("data/training_images_full.npz", 0.8)
 
-    dataset = FaceDataset("data/training_images_full.npz", partial=True, augment=False)
+    # dataset = FaceDataset("data/training_images_full.npz", partial=True, augment=False)
+    # print(len(dataset))
+    # # print(dataset[0][0].shape)
+    # # print(dataset[0][1].shape)
+    # # print(dataset[0][0])
+    # # print(dataset[0][1])
+    # # import cv2
+    # import matplotlib.pyplot as plt
+    # from torch.utils.data import DataLoader
+    # loader = DataLoader(dataset, batch_size=1, shuffle=True)
+    # for idx, (img, pts) in enumerate(loader):
+    #     # img = np.transpose(img, (1, 2, 0))
+    #     # img = img * 255
+    #     img, pts  = torchlm.LandmarksUnNormalize()(img, pts)
+    #     pts = pts.squeeze(0).reshape(-1, 2)
+    #     img = img.squeeze(0).numpy()
+    #     img = img.astype(np.uint8)
+    #     img = np.transpose(img, (1, 2, 0))
+    #     print(pts)
+    #     # plt.imshow(img)
+    #     plt.plot(pts[:, 0], pts[:, 1], 'bx')
+    #     plt.show()
+    #     if idx == 10:
+    #         break
+
+    from utils import *
+
+    from resnet import *
+
+    DEVICE = torch.device('cpu')
+    stage1_model = resnet18(pretrained=False, num_classes=10).to(DEVICE)
+    STAGE1_MODEL_PATH = "checkpoints/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
+    TRAIN_PATH = "data/training_images_full.npz"
+    load_checkpoint(torch.load(STAGE1_MODEL_PATH), stage1_model)
+    dataset = CascadeStage2Dataset(path=TRAIN_PATH, model=stage1_model, augment=False, device=DEVICE, test=True)
     print(len(dataset))
-    # print(dataset[0][0].shape)
-    # print(dataset[0][1].shape)
-    # print(dataset[0][0])
-    # print(dataset[0][1])
+
+    data = np.load(TRAIN_PATH, allow_pickle=True)
+    # Extract the images
+    images = data['images']
+    # and the data points
+    landmarks = data['points']
     # import cv2
     import matplotlib.pyplot as plt
     from torch.utils.data import DataLoader
-    loader = DataLoader(dataset, batch_size=1, shuffle=True)
-    for idx, (img, pts) in enumerate(loader):
-        # img = np.transpose(img, (1, 2, 0))
-        # img = img * 255
+    loader = DataLoader(dataset, batch_size=1, shuffle=False)
+    for idx, (img, pts, angle, pred) in enumerate(loader):
         img, pts  = torchlm.LandmarksUnNormalize()(img, pts)
         pts = pts.squeeze(0).reshape(-1, 2)
         img = img.squeeze(0).numpy()
         img = img.astype(np.uint8)
         img = np.transpose(img, (1, 2, 0))
-        print(pts)
-        # plt.imshow(img)
+        plt.imshow(img)
         plt.plot(pts[:, 0], pts[:, 1], 'bx')
+
         plt.show()
-        if idx == 10:
+        plt.imshow(images[idx])
+        plt.plot(landmarks[idx][:, 0], landmarks[idx][:, 1], 'bx')
+        plt.plot(pred.squeeze(0)[:, 0], pred.squeeze(0)[:, 1], 'rx')
+        plt.show()
+        if idx == 5:
             break
