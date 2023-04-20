@@ -37,3 +37,8 @@ dir structure:
 
 # Results
 /results.xlsx
+
+# Reference
+Feng, Z.-H. et al. (2017) ‘Wing Loss for Robust Facial Landmark Localisation with Convolutional Neural Networks’. doi:10.48550/arxiv.1711.06753.
+
+MMPose Contributors. (2020). OpenMMLab Pose Estimation Toolbox and Benchmark (Version v1.0.00). https://github.com/open-mmlab/mmpose
