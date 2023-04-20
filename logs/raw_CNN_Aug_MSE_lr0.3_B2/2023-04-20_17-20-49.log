@@ -1,0 +1,20 @@
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Task: raw_CNN_Aug_MSE_lr0.3_B2
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Using device: cuda
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Using config: config\raw_CNN_Aug_MSE\raw_CNN_Aug_MSE_lr0.3_B2.yaml
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Train path: data/training_images_full_train.npz
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Test path: data/training_images_full_test.npz
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Train augment: True
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Learning rate: 0.3
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Batch size: 2
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Num epochs: 100
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Save model: True
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Loss: MSE
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Log path: logs/raw_CNN_Aug_MSE_lr0.3_B2/2023-04-20_17-20-49.log
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Writer path: runs/raw_CNN_Aug_MSE_lr0.3_B2/2023-04-20_17-20-49
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Model name: resnet18
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Num outputs: 88
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Pretrained: True
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Load model: False
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Load path: None
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Loading data...
+[Thu Apr 20 17:20:49 2023|main.py|INFO] Load dataset for raw_CNN_Aug_MSE_lr0.3_B2
