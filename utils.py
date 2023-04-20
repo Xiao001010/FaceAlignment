@@ -227,7 +227,9 @@ def test(loop, model, criterion, writer, step, device):
     mean_nme = nme_total / len(loop)
     return step, mean_nme
 
-def Recover(image, landmarks, angle, size=(256, 256)):
+def Recover(image, landmarks, angle=0, size=(256, 256)):
+    if len(image.shape) == 4 and image.shape[0] == 1:
+        image = image.squeeze(0)
     if isinstance(image, torch.Tensor):
         image, landmarks = torchlm.LandmarksUnNormalize()(image, landmarks)
         image, landmarks = image.numpy().astype(np.uint8), landmarks.numpy()
