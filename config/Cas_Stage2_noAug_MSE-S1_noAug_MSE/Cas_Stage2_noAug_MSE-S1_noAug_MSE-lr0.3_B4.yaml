@@ -1,4 +1,4 @@
-TASK: "Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.3_B16"
+TASK: "Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.3_B4"
 
 CASCADE: 
   STAGE: 2
@@ -13,7 +13,7 @@ DATA:
 
 TRAIN: 
   LEARNING_RATE: 0.3
-  BATCH_SIZE: 16
+  BATCH_SIZE: 4
   NUM_EPOCHS: 120
   SAVE_MODEL: True
   LOSS: "MSE"
