@@ -3,7 +3,7 @@ TASK: "Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.3_B16"
 CASCADE: 
   STAGE: 2
   STAGE1_MODEL_NAME: "resnet18"
-  STAGE1_MODEL_PATH: "checkpoints/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
+  STAGE1_MODEL_PATH: "checkpoints/Cas_Stage1_noAug_MSE/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
 
 DATA:
   TRAIN_PATH: "data/training_images_full_train.npz"
