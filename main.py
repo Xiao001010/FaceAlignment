@@ -109,7 +109,8 @@ elif STAGE == 2:
     log.info("Load dataset for cascade stage 2")
     train_dataset = CascadeStage2Dataset(
         path=TRAIN_PATH, model=stage1_model, augment=TRAIN_AUGMENT, device=DEVICE)
-    test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False)
+    test_dataset = CascadeStage2Dataset(
+        path=TEST_PATH, model=stage1_model, augment=False, device=DEVICE)
 else:
     log.info("Load dataset for {}".format(TASK))
     train_dataset = FaceDataset(
