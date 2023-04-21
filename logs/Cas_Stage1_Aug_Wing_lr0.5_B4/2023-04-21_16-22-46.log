@@ -152,3 +152,14 @@
 [Fri Apr 21 18:49:57 2023|main.py|INFO] EPOCH [10/100] Train NME: 0.14664
 [Fri Apr 21 18:49:58 2023|main.py|INFO] EPOCH [10/100] Test NME: 0.15287
 [Fri Apr 21 18:49:58 2023|main.py|INFO] EPOCH [10/100] Learning rate: 0.06711
+[Fri Apr 21 19:25:41 2023|main.py|INFO] EPOCH [11/100] Train NME: 0.14300
+[Fri Apr 21 19:25:43 2023|main.py|INFO] EPOCH [11/100] Test NME: 0.15584
+[Fri Apr 21 19:25:43 2023|main.py|INFO] EPOCH [11/100] Learning rate: 0.05369
+[Fri Apr 21 19:50:17 2023|main.py|INFO] EPOCH [12/100] Train NME: 0.14181
+[Fri Apr 21 19:50:19 2023|main.py|INFO] EPOCH [12/100] Test NME: 0.14317
+[Fri Apr 21 19:50:19 2023|main.py|INFO] EPOCH [12/100] Learning rate: 0.04295
+[Fri Apr 21 19:50:19 2023|main.py|INFO] EPOCH [12/100] NME improved from 0.14534 to 0.14317
+[Fri Apr 21 19:50:19 2023|main.py|INFO] EPOCH [12/100] Saving model to: checkpoints/Cas_Stage1_Aug_Wing_lr0.5_B4/2023-04-21_19-50-19_epoch_12_NME_0.14317.pth.tar
+[Fri Apr 21 20:16:04 2023|main.py|INFO] EPOCH [13/100] Train NME: 0.14257
+[Fri Apr 21 20:16:06 2023|main.py|INFO] EPOCH [13/100] Test NME: 0.14796
+[Fri Apr 21 20:16:06 2023|main.py|INFO] EPOCH [13/100] Learning rate: 0.03436

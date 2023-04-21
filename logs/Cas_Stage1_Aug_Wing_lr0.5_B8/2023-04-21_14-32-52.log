@@ -168,3 +168,15 @@
 [Fri Apr 21 18:44:21 2023|main.py|INFO] EPOCH [16/100] Train NME: 0.13335
 [Fri Apr 21 18:44:22 2023|main.py|INFO] EPOCH [16/100] Test NME: 0.14604
 [Fri Apr 21 18:44:22 2023|main.py|INFO] EPOCH [16/100] Learning rate: 0.01759
+[Fri Apr 21 19:15:31 2023|main.py|INFO] EPOCH [17/100] Train NME: 0.13233
+[Fri Apr 21 19:15:32 2023|main.py|INFO] EPOCH [17/100] Test NME: 0.14685
+[Fri Apr 21 19:15:32 2023|main.py|INFO] EPOCH [17/100] Learning rate: 0.01407
+[Fri Apr 21 19:38:42 2023|main.py|INFO] EPOCH [18/100] Train NME: 0.13213
+[Fri Apr 21 19:38:44 2023|main.py|INFO] EPOCH [18/100] Test NME: 0.14370
+[Fri Apr 21 19:38:44 2023|main.py|INFO] EPOCH [18/100] Learning rate: 0.01126
+[Fri Apr 21 20:04:33 2023|main.py|INFO] EPOCH [19/100] Train NME: 0.13147
+[Fri Apr 21 20:04:35 2023|main.py|INFO] EPOCH [19/100] Test NME: 0.14477
+[Fri Apr 21 20:04:35 2023|main.py|INFO] EPOCH [19/100] Learning rate: 0.00901
+[Fri Apr 21 20:30:13 2023|main.py|INFO] EPOCH [20/100] Train NME: 0.13229
+[Fri Apr 21 20:30:14 2023|main.py|INFO] EPOCH [20/100] Test NME: 0.14720
+[Fri Apr 21 20:30:14 2023|main.py|INFO] EPOCH [20/100] Learning rate: 0.00721
