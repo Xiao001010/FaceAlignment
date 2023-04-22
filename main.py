@@ -163,7 +163,7 @@ else:
 
 log.info("Optimizer: {}".format("Adam"))
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.8) 
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9) 
 
 # Tensorboard to get nice loss plots
 # Create writer
