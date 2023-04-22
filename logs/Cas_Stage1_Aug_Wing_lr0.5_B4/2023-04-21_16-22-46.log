@@ -163,3 +163,26 @@
 [Fri Apr 21 20:16:04 2023|main.py|INFO] EPOCH [13/100] Train NME: 0.14257
 [Fri Apr 21 20:16:06 2023|main.py|INFO] EPOCH [13/100] Test NME: 0.14796
 [Fri Apr 21 20:16:06 2023|main.py|INFO] EPOCH [13/100] Learning rate: 0.03436
+[Fri Apr 21 20:39:38 2023|main.py|INFO] EPOCH [14/100] Train NME: 0.14116
+[Fri Apr 21 20:39:40 2023|main.py|INFO] EPOCH [14/100] Test NME: 0.15494
+[Fri Apr 21 20:39:40 2023|main.py|INFO] EPOCH [14/100] Learning rate: 0.02749
+[Fri Apr 21 21:00:45 2023|main.py|INFO] EPOCH [15/100] Train NME: 0.14154
+[Fri Apr 21 21:00:46 2023|main.py|INFO] EPOCH [15/100] Test NME: 0.14881
+[Fri Apr 21 21:00:46 2023|main.py|INFO] EPOCH [15/100] Learning rate: 0.02199
+[Fri Apr 21 21:14:23 2023|main.py|INFO] EPOCH [16/100] Train NME: 0.14008
+[Fri Apr 21 21:14:25 2023|main.py|INFO] EPOCH [16/100] Test NME: 0.14449
+[Fri Apr 21 21:14:25 2023|main.py|INFO] EPOCH [16/100] Learning rate: 0.01759
+[Fri Apr 21 21:41:03 2023|main.py|INFO] EPOCH [17/100] Train NME: 0.13721
+[Fri Apr 21 21:41:05 2023|main.py|INFO] EPOCH [17/100] Test NME: 0.14279
+[Fri Apr 21 21:41:05 2023|main.py|INFO] EPOCH [17/100] Learning rate: 0.01407
+[Fri Apr 21 21:41:05 2023|main.py|INFO] EPOCH [17/100] NME improved from 0.14317 to 0.14279
+[Fri Apr 21 21:41:05 2023|main.py|INFO] EPOCH [17/100] Saving model to: checkpoints/Cas_Stage1_Aug_Wing_lr0.5_B4/2023-04-21_21-41-05_epoch_17_NME_0.14279.pth.tar
+[Fri Apr 21 22:06:44 2023|main.py|INFO] EPOCH [18/100] Train NME: 0.13599
+[Fri Apr 21 22:06:45 2023|main.py|INFO] EPOCH [18/100] Test NME: 0.14447
+[Fri Apr 21 22:06:45 2023|main.py|INFO] EPOCH [18/100] Learning rate: 0.01126
+[Fri Apr 21 22:31:42 2023|main.py|INFO] EPOCH [19/100] Train NME: 0.13525
+[Fri Apr 21 22:31:44 2023|main.py|INFO] EPOCH [19/100] Test NME: 0.14937
+[Fri Apr 21 22:31:44 2023|main.py|INFO] EPOCH [19/100] Learning rate: 0.00901
+[Fri Apr 21 22:57:37 2023|main.py|INFO] EPOCH [20/100] Train NME: 0.13345
+[Fri Apr 21 22:57:38 2023|main.py|INFO] EPOCH [20/100] Test NME: 0.14790
+[Fri Apr 21 22:57:38 2023|main.py|INFO] EPOCH [20/100] Learning rate: 0.00721
