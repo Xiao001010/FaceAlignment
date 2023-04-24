@@ -1,4 +1,4 @@
-TASK: "Cas_Stage2_Aug_MSE-S1_noAug_MSE-lr0.3_B2"
+TASK: "Cas_Stage2_noAug_Wing-S1_noAug_MSE-lr0.3_B2"
 
 CASCADE: 
   STAGE: 2
@@ -9,14 +9,14 @@ DATA:
   TRAIN_PATH: "data/training_images_full_train.npz"
   TRAIN_PATH2: None
   TEST_PATH: "data/training_images_full_test.npz"
-  TRAIN_AUGMENT: True
+  TRAIN_AUGMENT: False
 
 TRAIN: 
   LEARNING_RATE: 0.3
   BATCH_SIZE: 2
   NUM_EPOCHS: 120
   SAVE_MODEL: True
-  LOSS: "MSE"
+  LOSS: "Wing"
 
 MODEL: 
   MODEL_NAME: "resnet50"
