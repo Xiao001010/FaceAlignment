@@ -320,11 +320,10 @@ class CascadeStage2Dataset(Dataset):
     augment : bool, optional
         if True, the dataset will be augmented, by default False
     """    
-    def __init__(self, path, model, augment=False, device=torch.device('cpu'), required_angle=False, inference=False, test=False):
+    def __init__(self, path, model, augment=False, device=torch.device('cpu'), inference=False, test=False):
         self.model = model
         self.augment = augment
         self.device = device
-        self.required_angle = required_angle
         self.inference = inference
         self.test = test
         if self.augment:
@@ -406,9 +405,9 @@ class CascadeStage2Dataset(Dataset):
         img, label = self.trans(img, label)
 
         if self.test:
-            return img, label.reshape(-1), angle, pred
-        elif self.required_angle:
             return img, label.reshape(-1), angle
+        elif self.inference:
+            return img, angle
         else:
             return img, label.reshape(-1)
         
