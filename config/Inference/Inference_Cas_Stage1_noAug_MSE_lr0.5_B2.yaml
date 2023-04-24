@@ -14,4 +14,10 @@ MODEL:
   MODEL_NAME: "resnet18"
   NUM_OUTPUTS: 10
   PRETRAINED: True
-  LOAD_PATH: "checkpoints/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
+  LOAD_PATH: "checkpoints/Cas_Stage1_noAug_MSE/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
+
+
+INFERENCE: 
+  RECOVER: True
+  PLOT_ON_RAW_DATA: True
+  STOP_IDX: 5

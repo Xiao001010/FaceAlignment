@@ -1,0 +1,26 @@
+TASK: "Inference_Cas_Stage1_noAug_MSE_lr0.5_B2"
+
+CASCADE: 
+  STAGE: 2
+  STAGE1_MODEL_NAME: "resnet18"
+  STAGE1_MODEL_PATH: "checkpoints/Cas_Stage1_noAug_MSE/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
+
+DATA:
+  # TEST_PATH: "data/training_images_full_test.npz"
+  TEST_PATH: "data/test_images.npz"
+  AUGMENT: False
+  INFERENCE: True
+
+MODEL: 
+  MODEL_NAME: "resnet50"
+  NUM_OUTPUTS: 88
+  PRETRAINED: True
+  LOAD_PATH: "checkpoints/Cas_Stage2_noAug_MSE-S1_noAug_MSE/Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2/2023-04-22_16-44-30_epoch_98_NME_0.05349.pth.tar"
+
+
+INFERENCE: 
+  RECOVER: True
+  PLOT_ON_RAW_DATA: True
+  STOP_IDX: 10
+  SAVE_PREDICTIONS: True
+  PLOT: True
