@@ -7,12 +7,22 @@ import cv2
 import numpy as np
 import torch
 from torch.utils.tensorboard import SummaryWriter
+import matplotlib.pyplot as plt
+
 import logging
 
 import torchlm
 
 
-__all__ = ["get_logger", "save_checkpoint", "load_checkpoint", "NME", "train", "test"]
+__all__ = ["get_logger", 
+           "save_checkpoint", 
+           "load_checkpoint", 
+           "NME", 
+           "train", 
+           "test", 
+           "Recover", 
+           "Inferencer", 
+           "save_as_csv"]
 
 def get_logger(path):
     """Get logger for logging
@@ -258,6 +268,40 @@ def Recover(image, landmarks, angle=0, size=(256, 256)):
         new_img, new_landmarks = torchlm.LandmarksResize(size)(new_img, new_landmarks)
 
     return new_img.astype(np.uint8), new_landmarks.astype(np.float32)
+
+def Inferencer(model, image, recover=False, landmarks=None, angle=0, device="cpu", raw_image=None, raw_landmark=None, plot=False): 
+    fake_image = torch.zeros_like(image)
+    image = image.to(device)
+    output = model(image).cpu().detach()
+    image = image.cpu().detach()
+    if recover:
+        image, pred = Recover(image, output, angle)
+        if landmarks is not None:
+            fake_image, landmarks = Recover(fake_image, landmarks, angle)
+    else:
+        image, pred = Recover(image, output, size=image.shape[2:])
+    if raw_image is None:
+        raw_image = image
+    if plot:
+        plt.imshow(raw_image)
+        plt.plot(pred[:, 0], pred[:, 1], 'bx')
+        if landmarks is not None:
+            if raw_landmark is None:
+                raw_landmark = landmarks
+            plt.plot(raw_landmark[:, 0], raw_landmark[:, 1], 'rx')
+        plt.show()
+    return image, pred
+
+def save_as_csv(points, location = './results'):
+    """
+    Save the points out as a .csv file
+    :param points: numpy array of shape (no_test_images, no_points, 2) to be saved
+    :param location: Directory to save results.csv in. Default to current working directory
+    """
+    assert points.shape[0]==554, 'wrong number of image points, should be 554 test images'
+    assert np.prod(points.shape[1:])==44*2, 'wrong number of points provided. There should be 34 points with 2 values (x,y) per point'
+    np.savetxt(location + '/results.csv', np.reshape(points, (points.shape[0], -1)), delimiter=',')
+
 
 
 if __name__ == "__main__":
