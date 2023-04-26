@@ -66,7 +66,7 @@ def Light(image, landmarks):
     """    
     # get the image size
     x, y,_ = image.shape
-    radius = np.random.randint(10, int(min(x, y)), 1)
+    radius = np.random.randint(20, int(min(x, y)), 1)
 
     # get the center of the light
     pos_x = np.random.randint(0, (min(x, y) - radius), 1) 
@@ -74,6 +74,7 @@ def Light(image, landmarks):
     pos_x = int(pos_x[0])
     pos_y = int(pos_y[0])
     radius = int(radius[0])
+    print(pos_x, pos_y, radius)
 
     # light strength
     strength = 50
@@ -128,6 +129,7 @@ def Shadow(image, landmarks):
     pos_x = int(pos_x[0])
     pos_y = int(pos_y[0])
     radius = int(radius[0])
+    # print(pos_x, pos_y, radius)
 
     # light strength
     strength = 50
@@ -254,6 +256,7 @@ class FaceDataset(Dataset):
         else:
             self.trans = torchlm.LandmarksCompose([
                                         torchlm.LandmarksResize((224, 224)), 
+                                        # torchlm.LandmarksRandomBrightness((-5, 5), (0.8, 1.5)),
                                         torchlm.LandmarksNormalize(),
                                         torchlm.LandmarksToTensor(),
                                         ])
@@ -341,7 +344,7 @@ class CascadeStage2Dataset(Dataset):
         else:
             self.trans = torchlm.LandmarksCompose([
                                         # I don't know whether the landmarks will be changed if I resize the image
-                                        torchlm.LandmarksResize((224, 224)), 
+                                        # torchlm.LandmarksResize((224, 224)), 
                                         torchlm.LandmarksNormalize(),
                                         torchlm.LandmarksToTensor(),
                                         ])
@@ -418,65 +421,68 @@ class CascadeStage2Dataset(Dataset):
 if __name__ == "__main__":
     # split_data("data/training_images_full.npz", 0.8)
 
-    # dataset = FaceDataset("data/training_images_full.npz", partial=True, augment=False)
+    dataset = FaceDataset("data/training_images_full_test.npz", partial=False, augment=True, inference=False)
+    print(len(dataset))
+    # print(dataset[0][0].shape)
+    # print(dataset[0][1].shape)
+    # print(dataset[0][0])
+    # print(dataset[0][1])
+    # import cv2
+    import matplotlib.pyplot as plt
+    from torch.utils.data import DataLoader
+    loader = DataLoader(dataset, batch_size=1, shuffle=False)
+    for idx, (img, pts) in enumerate(loader):
+        # img = np.transpose(img, (1, 2, 0))
+        # img = img * 255
+        if idx == 1:
+            img, pts  = torchlm.LandmarksUnNormalize()(img, pts)
+            pts = pts.squeeze(0).reshape(-1, 2)
+            img = img.squeeze(0).numpy()
+            img = img.astype(np.uint8)
+            img = np.transpose(img, (1, 2, 0))
+            print(pts[0, 0], pts[0, 1])
+            plt.imshow(img)
+            plt.plot(pts[1:, 0], pts[1:, 1], 'bx')
+            plt.plot(pts[0, 0], pts[0, 1], 'rx')
+            plt.show()
+            break
+        # if idx == 10:
+        #     break
+
+    # from utils import *
+
+    # from resnet import *
+
+    # DEVICE = torch.device('cpu')
+    # stage1_model = resnet18(pretrained=False, num_classes=10).to(DEVICE)
+    # STAGE1_MODEL_PATH = "checkpoints/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
+    # TRAIN_PATH = "data/training_images_full.npz"
+    # load_checkpoint(torch.load(STAGE1_MODEL_PATH), stage1_model)
+    # dataset = CascadeStage2Dataset(path=TRAIN_PATH, model=stage1_model, augment=False, device=DEVICE, test=True)
     # print(len(dataset))
-    # # print(dataset[0][0].shape)
-    # # print(dataset[0][1].shape)
-    # # print(dataset[0][0])
-    # # print(dataset[0][1])
+
+    # data = np.load(TRAIN_PATH, allow_pickle=True)
+    # # Extract the images
+    # images = data['images']
+    # # and the data points
+    # landmarks = data['points']
     # # import cv2
     # import matplotlib.pyplot as plt
     # from torch.utils.data import DataLoader
-    # loader = DataLoader(dataset, batch_size=1, shuffle=True)
-    # for idx, (img, pts) in enumerate(loader):
-    #     # img = np.transpose(img, (1, 2, 0))
-    #     # img = img * 255
+    # loader = DataLoader(dataset, batch_size=1, shuffle=False)
+    # for idx, (img, pts, angle, pred) in enumerate(loader):
     #     img, pts  = torchlm.LandmarksUnNormalize()(img, pts)
     #     pts = pts.squeeze(0).reshape(-1, 2)
     #     img = img.squeeze(0).numpy()
     #     img = img.astype(np.uint8)
     #     img = np.transpose(img, (1, 2, 0))
-    #     print(pts)
-    #     # plt.imshow(img)
+    #     plt.imshow(img)
     #     plt.plot(pts[:, 0], pts[:, 1], 'bx')
+
     #     plt.show()
-    #     if idx == 10:
+    #     plt.imshow(images[idx])
+    #     plt.plot(landmarks[idx][:, 0], landmarks[idx][:, 1], 'bx')
+    #     plt.plot(pred.squeeze(0)[:, 0], pred.squeeze(0)[:, 1], 'rx')
+    #     plt.show()
+    #     if idx == 5:
     #         break
-
-    from utils import *
-
-    from resnet import *
-
-    DEVICE = torch.device('cpu')
-    stage1_model = resnet18(pretrained=False, num_classes=10).to(DEVICE)
-    STAGE1_MODEL_PATH = "checkpoints/Cas_Stage1_noAug_MSE_lr0.5_B2/2023-04-20_18-11-00_epoch_68_NME_0.03373.pth.tar"
-    TRAIN_PATH = "data/training_images_full.npz"
-    load_checkpoint(torch.load(STAGE1_MODEL_PATH), stage1_model)
-    dataset = CascadeStage2Dataset(path=TRAIN_PATH, model=stage1_model, augment=False, device=DEVICE, test=True)
-    print(len(dataset))
-
-    data = np.load(TRAIN_PATH, allow_pickle=True)
-    # Extract the images
-    images = data['images']
-    # and the data points
-    landmarks = data['points']
-    # import cv2
-    import matplotlib.pyplot as plt
-    from torch.utils.data import DataLoader
-    loader = DataLoader(dataset, batch_size=1, shuffle=False)
-    for idx, (img, pts, angle, pred) in enumerate(loader):
-        img, pts  = torchlm.LandmarksUnNormalize()(img, pts)
-        pts = pts.squeeze(0).reshape(-1, 2)
-        img = img.squeeze(0).numpy()
-        img = img.astype(np.uint8)
-        img = np.transpose(img, (1, 2, 0))
-        plt.imshow(img)
-        plt.plot(pts[:, 0], pts[:, 1], 'bx')
-
-        plt.show()
-        plt.imshow(images[idx])
-        plt.plot(landmarks[idx][:, 0], landmarks[idx][:, 1], 'bx')
-        plt.plot(pred.squeeze(0)[:, 0], pred.squeeze(0)[:, 1], 'rx')
-        plt.show()
-        if idx == 5:
-            break
