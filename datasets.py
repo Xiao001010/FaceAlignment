@@ -74,7 +74,7 @@ def Light(image, landmarks):
     pos_x = int(pos_x[0])
     pos_y = int(pos_y[0])
     radius = int(radius[0])
-    print(pos_x, pos_y, radius)
+    # print(pos_x, pos_y, radius)
 
     # light strength
     strength = 50
