@@ -4,8 +4,14 @@ data: https://drive.google.com/drive/folders/1mxaJRkDj8JWco4pbr7Z-oAfA_kVt93X6?u
 
 checkpoints: https://drive.google.com/drive/folders/1g3j0dPf-0_CPcHRTObO89OJv8g448Abw?usp=sharing
 
-# Results
+# Experiment Results
 /results.xlsx
+
+# Train
+python train.py --config configs\Cas_Stage2_noAug_MSE-S1_noAug_MSE\Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml
+
+# Inference
+python inference.py --config configs\Inference\Inference_Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml
 
 # Reference
 Feng, Z.-H. et al. (2017) ‘Wing Loss for Robust Facial Landmark Localisation with Convolutional Neural Networks’. doi:10.48550/arxiv.1711.06753.
