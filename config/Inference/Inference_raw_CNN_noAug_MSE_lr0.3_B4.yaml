@@ -1,0 +1,26 @@
+TASK: "Inference_raw_CNN_noAug_MSE_lr0.3_B4"
+
+CASCADE: 
+  STAGE: None
+  STAGE1_MODEL_NAME: None
+  STAGE1_MODEL_PATH: None
+
+DATA:
+  # TEST_PATH: "data/training_images_full_test.npz"
+  TEST_PATH: "data/test_images.npz"
+  # TEST_PATH: "data/examples.npz"
+  AUGMENT: False
+  INFERENCE: True
+
+MODEL: 
+  MODEL_NAME: "resnet18"
+  NUM_OUTPUTS: 88
+  PRETRAINED: True
+  LOAD_PATH: "checkpoints/raw_CNN_noAug_MSE/raw_CNN_noAug_MSE_lr0.3_B4/2023-04-16_04-07-18_epoch_74_NME_0.05580.pth.tar"
+
+INFERENCE: 
+  RECOVER: True
+  PLOT_ON_RAW_DATA: True
+  STOP_IDX: 10
+  SAVE_PREDICTIONS: False
+  PLOT: True

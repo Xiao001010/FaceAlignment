@@ -1,4 +1,4 @@
-TASK: "Inference_Cas_Stage1_noAug_MSE_lr0.5_B2"
+TASK: "Inference_Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2"
 
 CASCADE: 
   STAGE: 2
@@ -8,6 +8,7 @@ CASCADE:
 DATA:
   # TEST_PATH: "data/training_images_full_test.npz"
   TEST_PATH: "data/test_images.npz"
+  # TEST_PATH: "data/examples.npz"
   AUGMENT: False
   INFERENCE: True
 
@@ -21,6 +22,6 @@ MODEL:
 INFERENCE: 
   RECOVER: True
   PLOT_ON_RAW_DATA: True
-  STOP_IDX: 10
-  SAVE_PREDICTIONS: True
+  STOP_IDX: None
+  SAVE_PREDICTIONS: False
   PLOT: True
