@@ -64,10 +64,11 @@ affineTransformation.ipynb, draft.py are all dafts for the affine transformation
 ```
 
 ## Train
-python train.py --config configs\Cas_Stage2_noAug_MSE-S1_noAug_MSE\Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml
+
+```python train.py --config configs\Cas_Stage2_noAug_MSE-S1_noAug_MSE\Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml```
 
 ## Inference
-python inference.py --config configs\Inference\Inference_Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml
+```python inference.py --config configs\Inference\Inference_Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml```
 
 ## Reference
 Feng, Z.-H. et al. (2017) ‘Wing Loss for Robust Facial Landmark Localisation with Convolutional Neural Networks’. doi:10.48550/arxiv.1711.06753.
