@@ -60,7 +60,7 @@ This file contains the tool functions.
 
 Coursework_Assignment_Spring_23.pdf is the description of the assignment.
 
-affineTransformation.py, affineTransformation.ipynb, draft.py are all dafts for the affine transformation, pls ignore them.
+affineTransformation.ipynb, draft.py are all dafts for the affine transformation, pls ignore them.
 ```
 
 ## Train
