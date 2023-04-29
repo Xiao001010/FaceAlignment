@@ -190,6 +190,27 @@ def Mask(image, landmarks):
 
 
 def Align(image, landmarks, eyes):
+    """This function aligns the image. 
+    The image is aligned using the eyes to find angle to make the eyes horizontal.
+
+    Parameters
+    ----------
+    image : np.ndarray[W, H, 3]
+        image to be aligned
+    landmarks : np.ndarray[K, 2]
+        landmarks of the image
+    eyes : np.ndarray[2, 2]
+        coordinates of the eyes
+
+    Returns
+    -------
+    image : np.ndarray[W, H, 3]
+        aligned image
+    landmarks : np.ndarray[K, 2]
+        landmarks of the image
+    angle : float
+        angle by which the image is rotated
+    """    
     left_eye = eyes[0]
     right_eye = eyes[1]
     dx = (right_eye[0] - left_eye[0])
@@ -225,6 +246,9 @@ class FaceDataset(Dataset):
         only 5 landmarks will be loaded, by default False
     augment : bool, optional
         if True, the dataset will be augmented, by default False
+    inference : bool, optional
+        if True, the dataset will be loaded in inference mode which will not load the landmarks,
+        by default False
     """    
     def __init__(self, path, partial=False, augment=False, inference=False):
 
@@ -256,7 +280,6 @@ class FaceDataset(Dataset):
         else:
             self.trans = torchlm.LandmarksCompose([
                                         torchlm.LandmarksResize((224, 224)), 
-                                        # torchlm.LandmarksRandomBrightness((-5, 5), (0.8, 1.5)),
                                         torchlm.LandmarksNormalize(),
                                         torchlm.LandmarksToTensor(),
                                         ])
@@ -322,6 +345,16 @@ class CascadeStage2Dataset(Dataset):
         only 5 landmarks will be loaded, by default False
     augment : bool, optional
         if True, the dataset will be augmented, by default False
+    device : torch.device, optional
+        device to load the data, by default torch.device('cpu')
+    inference : bool, optional
+        if True, the dataset will be loaded in inference mode which will not load the landmarks, 
+        but return the image and angle for alignment,
+        by default False
+    test : bool, optional
+        if True, the dataset will be loaded in test mode 
+        which will return the image, label and the angle for alignment,
+        by default False
     """    
     def __init__(self, path, model, augment=False, device=torch.device('cpu'), inference=False, test=False):
         self.model = model
@@ -343,8 +376,7 @@ class CascadeStage2Dataset(Dataset):
 
         else:
             self.trans = torchlm.LandmarksCompose([
-                                        # I don't know whether the landmarks will be changed if I resize the image
-                                        # torchlm.LandmarksResize((224, 224)), 
+                                        torchlm.LandmarksResize((224, 224)), 
                                         torchlm.LandmarksNormalize(),
                                         torchlm.LandmarksToTensor(),
                                         ])
@@ -371,8 +403,8 @@ class CascadeStage2Dataset(Dataset):
 
         Notes
         ------
-        number of landmarks : K = 44 if partial is False else 5
-        label shape : 44*2 if partial is False else 5*2
+        number of landmarks : K = 44 
+        label shape : 44*2 
 
         Parameters
         ----------
@@ -383,8 +415,10 @@ class CascadeStage2Dataset(Dataset):
         -------
         img : torch.Tensor[3, 224, 224]
             image
-        label : torch.Tensor[88 if partial is False else 10]
+        label : torch.Tensor[88], if test is True or inference is False
             landmarks of the image
+        angle : float, if test or inference is True
+            angle for alignment
         """      
         img = self.images[index]
         with torch.no_grad():  
@@ -421,7 +455,7 @@ class CascadeStage2Dataset(Dataset):
 if __name__ == "__main__":
     # split_data("data/training_images_full.npz", 0.8)
 
-    dataset = FaceDataset("data/training_images_full_test.npz", partial=False, augment=True, inference=False)
+    dataset = FaceDataset("data/training_images_full_test.npz", partial=False, augment=False, inference=False)
     print(len(dataset))
     # print(dataset[0][0].shape)
     # print(dataset[0][1].shape)

@@ -13,7 +13,7 @@ import logging
 
 import torchlm
 
-
+# list of all functions
 __all__ = ["get_logger", 
            "save_checkpoint", 
            "load_checkpoint", 
@@ -238,19 +238,46 @@ def test(loop, model, criterion, writer, step, device):
     return step, mean_nme
 
 def Recover(image, landmarks, angle=0, size=(256, 256)):
+    """Recover the image and landmarks to original angle and unnormalized form
+
+    Parameters
+    ----------
+    image : torch.Tensor or np.ndarray
+        image to be recovered, shape : (C, H, W) for torch.Tensor and (H, W, C) for np.ndarray
+    landmarks : torch.Tensor or np.ndarray
+        landmarks to be recovered, shape : (N, 2) or (1, N*2)
+    angle : int, optional
+        the angle of rotation, by default 0
+    size : tuple, optional
+        the size of the image to recover to, by default (256, 256)
+
+    Returns
+    -------
+    new_img : np.ndarray
+        recovered image
+    new_landmarks : np.ndarray
+        recovered landmarks
+    """    
+    # squeeze the image if it has a batch dimension
     if len(image.shape) == 4 and image.shape[0] == 1:
         image = image.squeeze(0)
+    # unnormalize the image and landmarks if they are torch.Tensor outputs from the model
+    # convert them to numpy.ndarray
     if isinstance(image, torch.Tensor):
         image, landmarks = torchlm.LandmarksUnNormalize()(image, landmarks)
         image, landmarks = image.numpy().astype(np.uint8), landmarks.numpy()
+    # transpose the image if it is in the form of (C, H, W)
     if image.shape[0] == 3 or image.shape[0] == 1:
         image = image.transpose(1, 2, 0)
+    # reshape the landmarks if they are in the form of (1, N*2)
     if landmarks.shape[-1] != 2:
         landmarks = landmarks.reshape(-1, 2)
 
+    # do nothing if the angle is 0
     if angle == 0:
         new_img, new_landmarks = image, landmarks
     else:
+        # get the center of the image
         w, h = image.shape[1], image.shape[0]
         cx, cy = w // 2, h // 2
 
@@ -264,12 +291,44 @@ def Recover(image, landmarks, angle=0, size=(256, 256)):
 
         new_landmarks = np.hstack((landmarks, np.ones((landmarks.shape[0], 1), dtype=type(landmarks[0][0]))))
         new_landmarks = np.dot(M, new_landmarks.T).T
+
+    # resize the image and landmarks if the size is not the same as the target size
     if new_img.shape[0] != size[0] or new_img.shape[1] != size[1]:
         new_img, new_landmarks = torchlm.LandmarksResize(size)(new_img, new_landmarks)
 
     return new_img.astype(np.uint8), new_landmarks.astype(np.float32)
 
 def Inferencer(model, image, recover=False, landmarks=None, angle=0, device="cpu", raw_image=None, raw_landmark=None, plot=False): 
+    """Inference the model on the given image
+
+    Parameters
+    ----------
+    model : torch.nn.Module
+        model to be used for inference
+    image : torch.Tensor
+        image to be used for inference
+    recover : bool, optional
+        whether to recover the image and landmarks, by default False
+    landmarks : _type_, optional
+        ground truth landmarks, by default None
+    angle : int, optional
+        the angle of rotation for recovering, by default 0
+    device : str, optional
+        device on which model is loaded, by default "cpu"
+    raw_image : np.ndarray, optional
+        raw image to be plotted, by default None
+    raw_landmark : np.ndarray, optional
+        raw landmarks to be plotted, by default None
+    plot : bool, optional
+        whether to plot the image and landmarks, by default False
+
+    Returns
+    -------
+    image : torch.Tensor
+        image, recovered if recover is True
+    pred : np.ndarray
+        predicted landmarks, recovered if recover is True
+    """    
     fake_image = torch.zeros_like(image)
     image = image.to(device)
     output = model(image).cpu().detach()
@@ -305,22 +364,30 @@ def save_as_csv(points, location = './results'):
 
 
 if __name__ == "__main__":
-    from resnet import resnet18
+    from resnet import *
     from datasets import FaceDataset
     from torch.utils.data import DataLoader
     # DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     DEVICE = "cpu"
     NUM_OUTPUTS = 44*2  # 44 points, 2 coordinates
     TEST_PATH = "data/training_images_full_test.npz"
-    model = resnet18(pretrained=True, num_classes=NUM_OUTPUTS).to(DEVICE)
+    model = resnet50(pretrained=True, num_classes=NUM_OUTPUTS).to(DEVICE)
     test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False)
     criterion = torch.nn.MSELoss()
-    for b in [2, 4, 8, 16, 32, 64]:
+    for b in [1, 2, 4, 8, 16, 32, 64]:
         test_loader = DataLoader(dataset=test_dataset, batch_size=b, shuffle=True)
         test_loop = tqdm(test_loader, total=len(test_loader), leave=False)
         test_loop.set_description("Testing")
-        timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
-        writer = SummaryWriter(f"runs/{timestamp}/")
+        # timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+        # writer = SummaryWriter(f"runs/{timestamp}/")
+        for batch_idx, (image, landmarks) in enumerate(test_loop):
+            image, landmarks = image.to(DEVICE), landmarks.to(DEVICE)
+            print(image.shape)
+            pred = model(image)
+            print(pred.shape)
+            # writer.add_graph(model, image)
+            break
+        break
         step = 0
         step, nme = test(test_loop, model, criterion, writer, step, DEVICE)
         print(b, nme)

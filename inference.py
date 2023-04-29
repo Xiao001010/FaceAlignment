@@ -7,12 +7,11 @@ import torch
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 
-import torchlm
-
 from utils import *
 from resnet import *
 from datasets import FaceDataset, CascadeStage2Dataset
 
+# load config file
 arg = argparse.ArgumentParser()
 arg.add_argument('--config', type=str, default='config/Inference/Inference_Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml', help='Path to config file')
 args = arg.parse_args()
@@ -47,6 +46,7 @@ STOP_IDX = config['INFERENCE']['STOP_IDX']
 SAVE_PREDICTIONS = config['INFERENCE']['SAVE_PREDICTIONS']
 PLOT = config['INFERENCE']['PLOT']
 
+# Load dataset
 if STAGE == 1:
     print("Load dataset for cascade stage 1 from {}".format(TEST_PATH))
     test_dataset = FaceDataset(path=TEST_PATH, partial=True, augment=False, inference=INFERENCE)
@@ -63,10 +63,10 @@ else:
     print("Load dataset for {} from {}".format(TASK, TEST_PATH))
     test_dataset = FaceDataset(path=TEST_PATH, partial=False, augment=False, inference=INFERENCE)
 
-
 test_loader = DataLoader(dataset=test_dataset,
                          batch_size=1, shuffle=False)
 
+# Load raw data for plotting
 raw_data = np.load(TEST_PATH)
 raw_images = raw_data['images']
 try:
@@ -101,16 +101,23 @@ load_checkpoint(torch.load(LOAD_PATH), model)
 # Inference
 print("Starting inference...")
 model.eval()
-if STAGE == 1 or STAGE is None:
+if STAGE != 2:
+    print("Inference on test data...")
     indices = (20, 29, 16, 32, 38)
     if INFERENCE:
         for i, (image, fake_landmarks) in enumerate(tqdm(test_loader)):
             if PLOT_ON_RAW_DATA and RECOVER:
                 raw_image = raw_images[i]
                 if STAGE == 1:
-                    raw_landmark = raw_landmarks[i][indices, :]
+                    try:
+                        raw_landmark = raw_landmarks[i][indices, :]
+                    except:
+                        raw_landmark = None
                 else:
-                    raw_landmark = raw_landmarks[i]
+                    try:
+                        raw_landmark = raw_landmarks[i]
+                    except:
+                        raw_landmark = None
             image, pred = Inferencer(model, image, recover=RECOVER, landmarks=None, angle=0, 
                        device=DEVICE, raw_image=raw_image, raw_landmark=raw_landmark, plot=PLOT)
             if STOP_IDX and i == STOP_IDX:
@@ -120,9 +127,15 @@ if STAGE == 1 or STAGE is None:
             if PLOT_ON_RAW_DATA and RECOVER:
                 raw_image = raw_images[i]
                 if STAGE == 1:
-                    raw_landmark = raw_landmarks[i][indices, :]
+                    try:
+                        raw_landmark = raw_landmarks[i][indices, :]
+                    except:
+                        raw_landmark = None
                 else:
-                    raw_landmark = raw_landmarks[i]
+                    try:
+                        raw_landmark = raw_landmarks[i]
+                    except:
+                        raw_landmark = None
             image, pred = Inferencer(model, image, recover=RECOVER, landmarks=landmarks, 
                        angle=0, device=DEVICE, raw_image=raw_image, raw_landmark=raw_landmark, plot=PLOT)
             if STOP_IDX and i == STOP_IDX:
@@ -136,7 +149,7 @@ elif STAGE == 2:
                 try:
                     raw_landmark = raw_landmarks[i]
                 except:
-                    # print("No landmarks in raw data")
+                    print("No landmarks in raw data")
                     raw_landmark = None
             angle = angle.item()
             image, pred = Inferencer(model, image, recover=RECOVER, landmarks=None, 
@@ -147,7 +160,7 @@ elif STAGE == 2:
     else:
         for i, (image, landmarks, angle) in enumerate(tqdm(test_loader)):
             if PLOT_ON_RAW_DATA and RECOVER:
-                print("plot on raw data")
+                # print("plot on raw data")
                 raw_image = raw_images[i]
                 raw_landmark = raw_landmarks[i]
             angle = angle.item()
@@ -158,6 +171,7 @@ elif STAGE == 2:
             if STOP_IDX and i == STOP_IDX:
                 break
 
+# Save predictions
 if SAVE_PREDICTIONS and STAGE == 2 and INFERENCE and STOP_IDX is None:
     print("Saving predictions...")
     predictions = np.array(predictions)

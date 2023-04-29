@@ -34,7 +34,7 @@ def conv1x1(in_planes, planes, stride=1, groups=1, dilation=1):
     """1x1 convolution with padding"""
     return nn.Conv2d(in_planes, planes, kernel_size=1, stride=stride, bias=False)
 
-class BasicBlock(nn.Module): #输出channel和输入chnnel都是64
+class BasicBlock(nn.Module): #输出channel和输入channel都是64
     """Basic Block for ResNet 18 and 34
 
     Note
