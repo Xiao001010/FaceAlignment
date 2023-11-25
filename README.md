@@ -71,6 +71,8 @@ affineTransformation.ipynb, draft.py are all dafts for the affine transformation
 ```python inference.py --config configs\Inference\Inference_Cas_Stage2_noAug_MSE-S1_noAug_MSE-lr0.5g0.9_B2.yaml```
 
 ## Reference
+K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90.
+
 Feng, Z.-H. et al. (2017) ‘Wing Loss for Robust Facial Landmark Localisation with Convolutional Neural Networks’. doi:10.48550/arxiv.1711.06753.
 
 MMPose Contributors. (2020). OpenMMLab Pose Estimation Toolbox and Benchmark (Version v1.0.00). https://github.com/open-mmlab/mmpose
