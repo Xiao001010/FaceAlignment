@@ -1,5 +1,5 @@
 # Face Alignment
-This repository contains the code for the assignment for Coursework_Assignment_Spring_23.pdf.
+This repository contains the code for the assignment for the Computer Vision module.
 
 ## Requirements
 - Python >= 3.9
